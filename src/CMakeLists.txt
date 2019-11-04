@@ -25,6 +25,7 @@ set(HEADERS
     include/Commands/Scale.h
     include/Drawing/Drawer.h
     include/Drawing/QtDraw.h
+    include/Drawing/GLDraw.h
     include/Finder/File.h
     include/Managers/Manager.h
     include/Managers/DeleteManager.h
@@ -60,6 +61,7 @@ set(SOURCES
     source/Commands/Save.cc
     source/Commands/Scale.cc
     source/Drawing/QtDraw.cc
+    source/Drawing/GLDraw.cc
     source/Finder/File.cc
     source/Managers/DrawManager.cc
     source/Managers/FileManager.cc

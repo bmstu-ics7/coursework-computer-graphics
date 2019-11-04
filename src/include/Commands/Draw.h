@@ -3,6 +3,7 @@
 
 #include "Command.h"
 #include "Drawing/QtDraw.h"
+#include "Drawing/GLDraw.h"
 
 class Draw : Command
 {
