@@ -1,10 +1,9 @@
 #ifndef __DRAWER_H
 #define __DRAWER_H
 
-#include <QPainter>
 #include <cmath>
 
-#include "Object/Point2D.h"
+#include "Object/Point3D.h"
 
 class Drawer
 {

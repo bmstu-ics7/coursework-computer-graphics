@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->canvas->setFacade(&facade);
 }
 
 MainWindow::~MainWindow()
@@ -15,26 +16,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::paintEvent(QPaintEvent*)
 {
-    /*
-    QPainter painter(this);
-    int canvasHeight = height();
-    int canvasWidth = width() - 220;
-    painter.setClipRect(0, 0, canvasWidth, canvasHeight);
-    painter.fillRect(0, 0, canvasWidth, canvasHeight, "#222");
-
-    try {
-        ObjectIterator begin = facade.getObjects().beginObjects();
-        ObjectIterator end = facade.getObjects().endObjects();
-        QtDraw drawer(painter, size_t(canvasWidth), size_t(canvasHeight));
-        Draw(begin, end, drawer).execute(facade);
-    } catch (std::bad_alloc e) {
-        qDebug() << e.what();
-    } catch (std::exception e) {
-        qDebug() << "paint exception";
-        qDebug() << e.what();
-    }
-    */
-    ui->canvas->paintGL();
+    ui->canvas->update();
 }
 
 void MainWindow::on_btnOffset_clicked()

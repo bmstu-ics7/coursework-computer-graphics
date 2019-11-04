@@ -11,7 +11,7 @@
 #include "Commands/Scale.h"
 #include "Commands/Load.h"
 #include "Commands/Save.h"
-#include "Commands/Draw.h"
+//#include "Commands/Draw.h"
 
 namespace Ui {
 class MainWindow;
