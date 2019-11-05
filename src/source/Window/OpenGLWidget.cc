@@ -53,6 +53,11 @@ void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
     glEnd();
 }
 
+void OpenGLWidget::drawParticle(const Point3D& particle)
+{
+
+}
+
 void OpenGLWidget::setFacade(Scene* facade)
 {
     this->facade = facade;
