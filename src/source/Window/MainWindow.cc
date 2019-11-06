@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->canvas->setFacade(&facade);
     AddParticle(0, 0, 0).execute(facade);
+    AddParticle(0.01, 0.01, 0).execute(facade);
+    AddParticle(0.5, 0.5, 0).execute(facade);
 }
 
 MainWindow::~MainWindow()

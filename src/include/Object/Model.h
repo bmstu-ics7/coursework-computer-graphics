@@ -2,7 +2,6 @@
 #define __MODEL_H
 
 #include "Object/VisibleObject.h"
-#include "Drawing/Drawer.h"
 #include "Object/Edge.h"
 #include "Object/Point2D.h"
 
@@ -13,6 +12,13 @@ public:
 
     void addPoint(Point3D point);
     void addEdge(Edge edge);
+
+    void draw(Drawer& drawer) override;
+    void scale(const Point3D& center, double k) override;
+    void offset(double dx, double dy, double dz) override;
+    void rotateX(const Point3D& center, double a) override;
+    void rotateY(const Point3D& center, double a) override;
+    void rotateZ(const Point3D& center, double a) override;
 
     std::vector< Point3D >& getPoints();
     std::vector< Edge >& getEdges();
