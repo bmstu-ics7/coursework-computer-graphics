@@ -1,5 +1,8 @@
 #include "Object/Position.h"
 
+Position::Position(double x, double y, double z)
+    : Position(Point3D(x, y, z)) { }
+
 Position::Position(Point3D center) : center(center) { }
 
 Position::Position(const std::vector< Point3D >& points)

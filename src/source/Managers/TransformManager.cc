@@ -8,14 +8,10 @@ void TransformManager::scale(ObjectIterator beginO, ObjectIterator endO,
     PositionIterator iterP = beginP;
 
     for (; iterO != endO || iterP != endP; ++iterO, ++iterP) {
-        Model* model = (Model*)iterO->get();
+        Object* obj = iterO->get();
         Position* pos = iterP->get();
         Point3D center = pos->get();
-
-        std::vector< Point3D >& points = model->getPoints();
-        for (size_t i = 0; i < points.size(); ++i) {
-            points[i].scale(center, k);
-        }
+        obj->scale(center, k);
     }
 }
 
@@ -27,14 +23,11 @@ void TransformManager::offset(ObjectIterator beginO, ObjectIterator endO,
     PositionIterator iterP = beginP;
 
     for (; iterO != endO || iterP != endP; ++iterO, ++iterP) {
-        Model* model = (Model*)iterO->get();
+        Object* obj = iterO->get();
+        obj->offset(dx, dy, dz);
+
         Position* pos = iterP->get();
         pos->offset(dx, dy, dz);
-
-        std::vector< Point3D >& points = model->getPoints();
-        for (size_t i = 0; i < points.size(); ++i) {
-            points[i].offset(dx, dy, dz);
-        }
     }
 }
 
@@ -46,14 +39,10 @@ void TransformManager::rotateX(ObjectIterator beginO, ObjectIterator endO,
     PositionIterator iterP = beginP;
 
     for (; iterO != endO || iterP != endP; ++iterO, ++iterP) {
-        Model* model = (Model*)iterO->get();
+        Object* obj = iterO->get();
         Position* pos = iterP->get();
         Point3D center = pos->get();
-
-        std::vector< Point3D >& points = model->getPoints();
-        for (size_t i = 0; i < points.size(); ++i) {
-            points[i].rotateX(center, angle);
-        }
+        obj->rotateX(center, angle);
     }
 }
 
@@ -65,14 +54,10 @@ void TransformManager::rotateY(ObjectIterator beginO, ObjectIterator endO,
     PositionIterator iterP = beginP;
 
     for (; iterO != endO || iterP != endP; ++iterO, ++iterP) {
-        Model* model = (Model*)iterO->get();
+        Object* obj = iterO->get();
         Position* pos = iterP->get();
         Point3D center = pos->get();
-
-        std::vector< Point3D >& points = model->getPoints();
-        for (size_t i = 0; i < points.size(); ++i) {
-            points[i].rotateY(center, angle);
-        }
+        obj->rotateY(center, angle);
     }
 }
 
@@ -84,13 +69,9 @@ void TransformManager::rotateZ(ObjectIterator beginO, ObjectIterator endO,
     PositionIterator iterP = beginP;
 
     for (; iterO != endO || iterP != endP; ++iterO, ++iterP) {
-        Model* model = (Model*)iterO->get();
+        Object* obj = iterO->get();
         Position* pos = iterP->get();
         Point3D center = pos->get();
-
-        std::vector< Point3D >& points = model->getPoints();
-        for (size_t i = 0; i < points.size(); ++i) {
-            points[i].rotateZ(center, angle);
-        }
+        obj->rotateZ(center, angle);
     }
 }

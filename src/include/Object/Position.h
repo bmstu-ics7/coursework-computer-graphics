@@ -6,6 +6,7 @@
 class Position
 {
 public:
+    Position(double x, double y, double z);
     Position(Point3D center);
     Position(const std::vector< Point3D >& points);
     void offset(double dx, double dy, double dz);
