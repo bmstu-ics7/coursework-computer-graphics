@@ -6,6 +6,7 @@
 #include "Managers/DrawManager.h"
 #include "Managers/TransformManager.h"
 #include "Managers/DeleteManager.h"
+#include "Object/Particle.h"
 
 class Scene
 {
