@@ -5,13 +5,12 @@
 #include <QFileDialog>
 #include <QDebug>
 
-//#include "OpenGLWidget.h"
 #include "Commands/Offset.h"
 #include "Commands/Rotate.h"
 #include "Commands/Scale.h"
 #include "Commands/Load.h"
 #include "Commands/Save.h"
-//#include "Commands/Draw.h"
+#include "Commands/AddParticle.h"
 
 namespace Ui {
 class MainWindow;

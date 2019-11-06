@@ -55,7 +55,10 @@ void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
 
 void OpenGLWidget::drawParticle(const Point3D& particle)
 {
-
+    glBegin(GL_POINTS);
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glVertex3f((GLfloat)particle.getX(), (GLfloat)particle.getY(), (GLfloat)particle.getZ());
+    glEnd();
 }
 
 void OpenGLWidget::setFacade(Scene* facade)
