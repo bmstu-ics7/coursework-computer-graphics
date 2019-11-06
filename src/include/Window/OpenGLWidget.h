@@ -14,6 +14,7 @@ public:
     OpenGLWidget(QWidget* parent = 0);
 
     void drawLine(const Point3D& a, const Point3D& b);
+    void drawParticle(const Point3D& particle);
 
     void setFacade(Scene* facade);
 

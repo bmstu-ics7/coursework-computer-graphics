@@ -23,6 +23,7 @@ set(HEADERS
     include/Commands/Rotate.h
     include/Commands/Save.h
     include/Commands/Scale.h
+    include/Commands/AddParticle.h
     include/Drawing/Drawer.h
     include/Drawing/QtDraw.h
     include/Drawing/GLDraw.h
@@ -45,6 +46,7 @@ set(HEADERS
     include/Object/Position.h
     include/Object/UnvisibleObject.h
     include/Object/VisibleObject.h
+    include/Object/Particle.h
     include/Scene/Iterator.h
     include/Scene/Scene.h
     include/Scene/SceneContainer.h
@@ -60,6 +62,7 @@ set(SOURCES
     source/Commands/Rotate.cc
     source/Commands/Save.cc
     source/Commands/Scale.cc
+    source/Commands/AddParticle.cc
     source/Drawing/QtDraw.cc
     source/Drawing/GLDraw.cc
     source/Finder/File.cc
@@ -72,6 +75,7 @@ set(SOURCES
     source/Object/Point3D.cc
     source/Object/Position.cc
     source/Object/Camera.cc
+    source/Object/Particle.cc
     source/Scene/SceneContainer.cc
     source/Math/Matrix.cc
 )
