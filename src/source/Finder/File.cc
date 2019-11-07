@@ -62,9 +62,9 @@ void File::saveModel(const Model& model)
 
     out << points.size();
     for (Point3D point : points) {
-        out << point.getX() << ' '
-            << point.getY() << ' '
-            << point.getZ() << std::endl;
+        out << point.x() << ' '
+            << point.y() << ' '
+            << point.z() << std::endl;
     }
 
     out << edges.size();

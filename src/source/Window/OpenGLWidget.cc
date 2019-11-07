@@ -48,8 +48,8 @@ void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
 {
     glBegin(GL_LINES);
     glColor3f(1.0f, 1.0f, 1.0f);
-    glVertex3f((GLfloat)a.getX(), (GLfloat)a.getY(), (GLfloat)a.getZ());
-    glVertex3f((GLfloat)b.getX(), (GLfloat)b.getY(), (GLfloat)b.getZ());
+    glVertex3f((GLfloat)a.x(), (GLfloat)a.y(), (GLfloat)a.z());
+    glVertex3f((GLfloat)b.x(), (GLfloat)b.y(), (GLfloat)b.z());
     glEnd();
 }
 
@@ -57,7 +57,7 @@ void OpenGLWidget::drawParticle(const Point3D& particle)
 {
     glBegin(GL_POINTS);
     glColor3f(1.0f, 1.0f, 1.0f);
-    glVertex3f((GLfloat)particle.getX(), (GLfloat)particle.getY(), (GLfloat)particle.getZ());
+    glVertex3f((GLfloat)particle.x(), (GLfloat)particle.y(), (GLfloat)particle.z());
     glEnd();
 }
 

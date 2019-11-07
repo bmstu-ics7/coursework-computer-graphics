@@ -17,16 +17,16 @@ public:
     void rotateY(const Point3D& center, double angle);
     void rotateZ(const Point3D& center, double angle);
 
-    double getX() const;
-    double getY() const;
-    double getZ() const;
+    double x() const;
+    double y() const;
+    double z() const;
 
 private:
     double scaleOne(double coord, double center, double k);
 
-    double x;
-    double y;
-    double z;
+    double _x;
+    double _y;
+    double _z;
 };
 
 #endif // __POINT3D_H

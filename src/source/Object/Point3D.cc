@@ -5,17 +5,13 @@ Point3D::Point3D() : Point3D(0) { }
 Point3D::Point3D(double x) : Point3D(x, x, x) { }
 
 Point3D::Point3D(double x, double y, double z)
-{
-    this->x = x;
-    this->y = y;
-    this->z = z;
-}
+    : _x(x), _y(y), _z(z) { }
 
 void Point3D::scale(const Point3D& center, double k)
 {
-    x = scaleOne(x, center.x, k);
-    y = scaleOne(y, center.y, k);
-    z = scaleOne(z, center.z, k);
+    _x = scaleOne(_x, center._x, k);
+    _y = scaleOne(_y, center._y, k);
+    _z = scaleOne(_z, center._z, k);
 }
 
 double Point3D::scaleOne(double coord, double center, double k)
@@ -25,58 +21,58 @@ double Point3D::scaleOne(double coord, double center, double k)
 
 void Point3D::offset(double dx, double dy, double dz)
 {
-    x += dx;
-    y += dy;
-    z += dz;
+    _x += dx;
+    _y += dy;
+    _z += dz;
 }
 
 void Point3D::rotateX(const Point3D& center, double a)
 {
     double ax = (a * M_PI) / 180.0;
 
-    double cy = center.y;
-    double cz = center.z;
+    double cy = center._y;
+    double cz = center._z;
 
     Point3D p = *this;
-    y = cy + (p.y - cy) * cos(ax) + (p.z - cz) * sin(ax);
-    z = cz - (p.y - cy) * sin(ax) + (p.z - cz) * cos(ax);
+    _y = cy + (p._y - cy) * cos(ax) + (p._z - cz) * sin(ax);
+    _z = cz - (p._y - cy) * sin(ax) + (p._z - cz) * cos(ax);
 }
 
 void Point3D::rotateY(const Point3D& center, double a)
 {
     double ay = (a * M_PI) / 180.0;
 
-    double cx = center.x;
-    double cz = center.z;
+    double cx = center._x;
+    double cz = center._z;
 
     Point3D p = *this;
-    x = cx + (p.z - cz) * sin(ay) + (p.x - cx) * cos(ay);
-    z = cz + (p.z - cz) * cos(ay) - (p.x - cx) * sin(ay);
+    _x = cx + (p._z - cz) * sin(ay) + (p._x - cx) * cos(ay);
+    _z = cz + (p._z - cz) * cos(ay) - (p._x - cx) * sin(ay);
 }
 
 void Point3D::rotateZ(const Point3D& center, double a)
 {
     double az = (a * M_PI) / 180.0;
 
-    double cx = center.x;
-    double cy = center.y;
+    double cx = center._x;
+    double cy = center._y;
 
     Point3D p = *this;
-    x = cx + (p.x - cx) * cos(az) + (p.y - cy) * sin(az);
-    y = cy - (p.x - cx) * sin(az) + (p.y - cy) * cos(az);
+    _x = cx + (p._x - cx) * cos(az) + (p._y - cy) * sin(az);
+    _y = cy - (p._x - cx) * sin(az) + (p._y - cy) * cos(az);
 }
 
-double Point3D::getX() const
+double Point3D::x() const
 {
-    return x;
+    return _x;
 }
 
-double Point3D::getY() const
+double Point3D::y() const
 {
-    return y;
+    return _y;
 }
 
-double Point3D::getZ() const
+double Point3D::z() const
 {
-    return z;
+    return _z;
 }

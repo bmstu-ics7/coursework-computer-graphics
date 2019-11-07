@@ -11,8 +11,8 @@ int QtDraw::round(double x)
 
 void QtDraw::drawLine(const Point3D& a, const Point3D& b)
 {
-    painter.drawLine(int(w / 2) + round(a.getX()),
-                     int(h / 2) + round(a.getY()),
-                     int(w / 2) + round(b.getX()),
-                     int(h / 2) + round(b.getY()));
+    painter.drawLine(int(w / 2) + round(a.x()),
+                     int(h / 2) + round(a.y()),
+                     int(w / 2) + round(b.x()),
+                     int(h / 2) + round(b.y()));
 }

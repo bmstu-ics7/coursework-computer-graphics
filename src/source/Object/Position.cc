@@ -12,9 +12,9 @@ Position::Position(const std::vector< Point3D >& points)
     double sumZ = 0;
 
     for (Point3D point : points) {
-        sumX += point.getX();
-        sumY += point.getY();
-        sumZ += point.getZ();
+        sumX += point.x();
+        sumY += point.y();
+        sumZ += point.z();
     }
 
     center = Point3D(sumX / points.size(),
