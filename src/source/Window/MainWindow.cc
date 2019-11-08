@@ -7,9 +7,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->canvas->setFacade(&facade);
-    AddParticle(0, 0, 0).execute(facade);
-    AddParticle(0.01, 0.01, 0).execute(facade);
-    AddParticle(0.5, 0.5, 0).execute(facade);
+
+    for (double a = -5; a <= 5; a += 0.01) {
+        AddParticle(
+                cos(4 * a) * sin(a),
+                cos(4 * a) * cos(a),
+                0).execute(facade);
+    }
 }
 
 MainWindow::~MainWindow()

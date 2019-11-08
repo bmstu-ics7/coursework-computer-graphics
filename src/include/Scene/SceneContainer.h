@@ -7,6 +7,7 @@
 #include "Object/Model.h"
 #include "Object/Position.h"
 #include "Object/Camera.h"
+#include "Object/Particle.h"
 #include "Iterator.h"
 
 class SceneContainer

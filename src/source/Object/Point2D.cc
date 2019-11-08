@@ -5,23 +5,20 @@ Point2D::Point2D() : Point2D(0) { }
 Point2D::Point2D(double x) : Point2D(x, x) { }
 
 Point2D::Point2D(double x, double y)
-{
-    this->x = x;
-    this->y = y;
-}
+    : _x(x), _y(y) { }
 
 Point2D::Point2D(const Point3D& point)
 {
-    x = int(point.getX());
-    y = int(point.getY());
+    _x = int(point.x());
+    _y = int(point.y());
 }
 
-double Point2D::getX() const
+double Point2D::x() const
 {
-    return x;
+    return _x;
 }
 
-double Point2D::getY() const
+double Point2D::y() const
 {
-    return y;
+    return _y;
 }

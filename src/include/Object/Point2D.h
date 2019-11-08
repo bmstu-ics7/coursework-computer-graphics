@@ -11,12 +11,12 @@ public:
     Point2D(double x, double y);
     Point2D(const Point3D& point);
 
-    double getX() const;
-    double getY() const;
+    double x() const;
+    double y() const;
 
 private:
-    double x;
-    double y;
+    double _x;
+    double _y;
 };
 
 #endif // __POINT2D_H

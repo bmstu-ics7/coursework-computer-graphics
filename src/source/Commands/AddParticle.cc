@@ -7,6 +7,6 @@ void AddParticle::execute(Scene& facade)
     facade.getObjects().add(particle);
 
     std::shared_ptr< Position > pos;
-    pos.reset(new Position(_x, _y, _z));
+    pos.reset(new Position(0, 0, 0));
     facade.getObjects().addPosition(pos);
 }

@@ -21,10 +21,12 @@ void OpenGLWidget::resizeGL(int newWidth, int newHeight)
     glLoadIdentity();
     GLfloat overw = (GLfloat)_width / _height;
     GLfloat overh = (GLfloat)_height / _width;
-    glFrustum(-100.0 * overw, +100.0 * overw,
+    qDebug() << _width << _height;
+    glFrustum(-_width, _width, -_height, _height, 15.0f, 15.0f);
+    /*glFrustum(-100.0 * overw, +100.0 * overw,
               -1.0   * overh, +1.0   * overh,
               +1.0, +1.0
-             );
+             );*/
     glViewport(0, 0, (GLint)_width, (GLint)_height);
 }
 
@@ -47,17 +49,21 @@ void OpenGLWidget::paintGL()
 void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
 {
     glBegin(GL_LINES);
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glVertex3f((GLfloat)a.getX(), (GLfloat)a.getY(), (GLfloat)a.getZ());
-    glVertex3f((GLfloat)b.getX(), (GLfloat)b.getY(), (GLfloat)b.getZ());
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glVertex3f((GLfloat)a.x(), (GLfloat)a.y(), (GLfloat)a.z());
+        glVertex3f((GLfloat)b.x(), (GLfloat)b.y(), (GLfloat)b.z());
     glEnd();
 }
 
 void OpenGLWidget::drawParticle(const Point3D& particle)
 {
+    glPointSize(3.0f);
+    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_POINT_SMOOTH);
+
     glBegin(GL_POINTS);
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glVertex3f((GLfloat)particle.getX(), (GLfloat)particle.getY(), (GLfloat)particle.getZ());
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glVertex3f((GLfloat)particle.x(), (GLfloat)particle.y(), (GLfloat)particle.z());
     glEnd();
 }
 
@@ -69,5 +75,3 @@ void OpenGLWidget::setFacade(Scene* facade)
 size_t OpenGLWidget::widht() { return _width; }
 
 size_t OpenGLWidget::height() { return _height; }
-
-//void OpenGLWidget::draw
