@@ -8,12 +8,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->canvas->setFacade(&facade);
 
-    for (double a = -5; a <= 5; a += 0.01) {
+    for (double a = -100; a <= 100; a += 0.005) {
         AddParticle(
-                cos(4 * a) * sin(a),
-                cos(4 * a) * cos(a),
+                1 * cos(2 * a) * sin(a),
+                1 * cos(2 * a) * cos(a),
                 0).execute(facade);
     }
+    AddParticle(1, -1, 0).execute(facade);
+    AddParticle(-1, 1, 0).execute(facade);
+    AddParticle(-1, -1, 0).execute(facade);
+    AddParticle(1, 1, 0).execute(facade);
 }
 
 MainWindow::~MainWindow()
@@ -21,11 +25,41 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent* e)
+{
+    switch (e->key()) {
+    case Qt::Key_J:
+        MoveCamera(ActionMove::Forward, 0.95, 0.95, 1).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_K:
+        MoveCamera(ActionMove::Back, 1.05, 1.05, 1).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_W:
+        MoveCamera(ActionMove::Up, 0, 0.05, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_A:
+        MoveCamera(ActionMove::Left, -0.05, 0, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_S:
+        MoveCamera(ActionMove::Down, 0, -0.05, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_D:
+        MoveCamera(ActionMove::Right, 0.05, 0, 0).execute(facade);
+        repaint();
+        break;
+    }
+}
+
 void MainWindow::paintEvent(QPaintEvent*)
 {
     ui->canvas->update();
 }
-
+/*
 void MainWindow::on_btnOffset_clicked()
 {
     double dx = ui->spinOffsetX->value();
@@ -108,3 +142,4 @@ void MainWindow::on_btnSave_clicked()
 
     repaint();
 }
+*/

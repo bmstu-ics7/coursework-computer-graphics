@@ -24,6 +24,9 @@ set(HEADERS
     include/Commands/Save.h
     include/Commands/Scale.h
     include/Commands/AddParticle.h
+    include/Commands/ActionMove.h
+    include/Commands/MoveCamera.h
+    include/Commands/RotateCamera.h
     include/Drawing/Drawer.h
     include/Drawing/QtDraw.h
     include/Drawing/GLDraw.h
@@ -63,6 +66,8 @@ set(SOURCES
     source/Commands/Save.cc
     source/Commands/Scale.cc
     source/Commands/AddParticle.cc
+    source/Commands/MoveCamera.cc
+    source/Commands/RotateCamera.cc
     source/Drawing/QtDraw.cc
     source/Drawing/GLDraw.cc
     source/Finder/File.cc

@@ -7,7 +7,7 @@
 class QtDraw : public Drawer
 {
 public:
-    QtDraw(QPainter& painter, const size_t w, const size_t h);
+    QtDraw(QPainter& painter, const size_t w, const size_t h, Camera camera);
     void drawLine(const Point3D& a, const Point3D& b) override;
 
 private:

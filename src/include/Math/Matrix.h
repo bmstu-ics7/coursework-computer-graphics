@@ -11,7 +11,7 @@ public:
     Matrix();
     Matrix(size_t size);
 
-    std::vector< GLfloat > operator[](int index);
+    std::vector< GLfloat >& operator[](int index);
     const size_t size();
 
 private:

@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-#include "Object/Point3D.h"
+#include "Object/Camera.h"
 
 class Drawer
 {
@@ -13,9 +13,12 @@ public:
     virtual void drawParticle(const Point3D& particle) = 0;
 
 protected:
-    Drawer(const size_t w, const size_t h) : w(w), h(h) { }
+    Drawer(const size_t w, const size_t h, Camera camera) : w(w), h(h), camera(camera) { }
+
+protected:
     const size_t w;
     const size_t h;
+    Camera camera;
 };
 
 #endif // __DRAWER_H

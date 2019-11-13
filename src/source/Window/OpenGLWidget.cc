@@ -16,27 +16,25 @@ void OpenGLWidget::resizeGL(int newWidth, int newHeight)
 {
     _width = newWidth;
     _height = newHeight;
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    GLfloat overw = (GLfloat)_width / _height;
-    GLfloat overh = (GLfloat)_height / _width;
-    qDebug() << _width << _height;
-    glFrustum(-_width, _width, -_height, _height, 15.0f, 15.0f);
-    /*glFrustum(-100.0 * overw, +100.0 * overw,
-              -1.0   * overh, +1.0   * overh,
-              +1.0, +1.0
-             );*/
-    glViewport(0, 0, (GLint)_width, (GLint)_height);
+    //glMatrixMode(GL_PROJECTION);
+    //glLoadIdentity();
+    //glFrustum(-_width, _width, -_height, _height, 500.0f, 500.0f);
+    //glViewport(0, 0, (GLint)_width, (GLint)_height);
 }
 
 void OpenGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT);
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+
+    //glFrustum(-_width, _width, -_height, _height, 500.0f, 500.0f);
+    //glViewport(0, 0, (GLint)_width * 2, (GLint)_height * 2);
+
     try {
         ObjectIterator begin = facade->getObjects().beginObjects();
         ObjectIterator end = facade->getObjects().endObjects();
-        GLDraw drawer(*(this));
+        GLDraw drawer(*(this), facade->getMatrix());
         Draw(begin, end, drawer).execute(*facade);
     } catch (std::bad_alloc e) {
         qDebug() << e.what();
