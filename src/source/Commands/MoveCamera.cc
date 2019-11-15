@@ -11,7 +11,7 @@ void MoveCamera::execute(Scene& facade)
     case Down:
     case Left:
     case Right:
-        facade.getMatrix().moveGlobal(x, y, z, distance);
+        facade.getMatrix().move(x, y, z, distance);
         break;
     }
 }

@@ -4,6 +4,7 @@
 #include <QtOpenGL>
 #include <stdlib.h>
 #include <vector>
+#include <cmath>
 
 class Matrix
 {

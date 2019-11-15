@@ -13,6 +13,7 @@
 #include "Commands/Save.h"
 #include "Commands/AddParticle.h"
 #include "Commands/MoveCamera.h"
+#include "Commands/RotateCamera.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,18 +30,15 @@ public:
 public:
     void paintEvent(QPaintEvent*);
     void keyPressEvent(QKeyEvent*);
-/*
-private slots:
-    void on_btnOffset_clicked();
-    void on_btnRotate_clicked();
-    void on_btnScale_clicked();
-    void on_bntFile_clicked();
-    void on_btnSave_clicked();
-*/
+    void mousePressedEvent(QMouseEvent*);
+    void mouseMoveEvent(QMouseEvent*);
+    void wheelEvent(QWheelEvent*);
+
 private:
     Ui::MainWindow *ui;
 
     Scene facade;
+    Point2D prev;
 };
 
 #endif // __MAINWINDOW_H

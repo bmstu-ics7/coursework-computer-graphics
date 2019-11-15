@@ -2,5 +2,5 @@
 
 void RotateCamera::execute(Scene& facade)
 {
-    facade.getMatrix().rotate(x, y, z, angle);
+    facade.getMatrix().rotate(x, y, z);
 }

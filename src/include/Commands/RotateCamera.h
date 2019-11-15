@@ -6,15 +6,14 @@
 class RotateCamera : Command
 {
 public:
-    RotateCamera(double x, double y, double z, double angle)
-        : x(x), y(y), z(z), angle(angle) { }
+    RotateCamera(double x, double y, double z)
+        : x(x), y(y), z(z) { }
     void execute(Scene& facade) override;
 
 private:
     double x;
     double y;
     double z;
-    double angle;
 };
 
 #endif // __ROTATECAMERA_H

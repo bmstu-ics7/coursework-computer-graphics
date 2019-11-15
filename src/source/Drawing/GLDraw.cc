@@ -12,5 +12,4 @@ void GLDraw::drawLine(const Point3D& a, const Point3D& b)
 void GLDraw::drawParticle(const Point3D& particle)
 {
     canvas.drawParticle(camera.multiplication(particle));
-    //canvas.drawParticle(particle);
 }

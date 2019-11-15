@@ -14,20 +14,6 @@ Camera::Camera(GLfloat posX, GLfloat posY, GLfloat posZ)
     mat[3][3] = 1.0f;
 
     setPosition(posX, posY, posZ);
-
-    qDebug() << "Camera";
-    qDebug() << mat[0];
-    qDebug() << mat[1];
-    qDebug() << mat[2];
-    qDebug() << mat[3];
-    qDebug() << "";
-
-    qDebug() << "reverse";
-    qDebug() << reverse[0];
-    qDebug() << reverse[1];
-    qDebug() << reverse[2];
-    qDebug() << reverse[3];
-    qDebug() << "";
 }
 
 
@@ -40,33 +26,11 @@ void Camera::setPosition(GLfloat posX, GLfloat posY, GLfloat posZ)
     findReverse();
 }
 
-void Camera::moveLocal(GLfloat x, GLfloat y, GLfloat z, GLfloat distance)
-{
-    GLfloat dx = x * mat[0][0] + y * mat[0][1] + z * mat[0][2];
-    GLfloat dy = x * mat[1][0] + y * mat[1][1] + z * mat[1][2];
-    GLfloat dz = x * mat[2][0] + y * mat[2][1] + z * mat[2][2];
-
-    mat[0][3] += dx * distance;
-    mat[1][3] += dy * distance;
-    mat[2][3] += dz * distance;
-
-    findReverse();
-}
-
-void Camera::moveGlobal(GLfloat x, GLfloat y, GLfloat z, GLfloat distance)
+void Camera::move(GLfloat x, GLfloat y, GLfloat z, GLfloat distance)
 {
     mat[0][3] += x * distance;
     mat[1][3] += y * distance;
     mat[2][3] += z * distance;
-
-    findReverse();
-}
-
-void Camera::rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
-{
-    GLfloat dx = x * mat[0][0] + y * mat[0][1] + z * mat[0][2];
-    GLfloat dy = x * mat[1][0] + y * mat[1][1] + z * mat[1][2];
-    GLfloat dz = x * mat[2][0] + y * mat[2][1] + z * mat[2][2];
 
     findReverse();
 }
@@ -78,6 +42,98 @@ void Camera::scale(GLfloat x, GLfloat y, GLfloat z)
     mat[2][2] *= z;
 
     findReverse();
+}
+
+void Camera::rotate(GLfloat x, GLfloat y, GLfloat z)
+{
+    rotateX += x;
+    rotateY += y;
+    rotateZ += z;
+
+    Matrix mx = matrixRotateX(x);
+    Matrix my = matrixRotateY(y);
+    Matrix mz = matrixRotateZ(z);
+
+    multiplicationMatrix(mx);
+    multiplicationMatrix(my);
+    multiplicationMatrix(mz);
+
+    findReverse();
+}
+
+void Camera::multiplicationMatrix(Matrix& matrix)
+{
+    Matrix res = Matrix(4);
+
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            for (int k = 0; k < 4; ++k) {
+                res[i][j] = res[i][j] + mat[i][k] * matrix[k][j];
+            }
+        }
+    }
+
+    mat = res;
+}
+
+Matrix Camera::matrixRotateX(GLfloat a)
+{
+    /*
+     * Вокруг оси x
+     * 1 0    0    0
+     * 0 cos  -sin 0
+     * 0 sin cos   0
+     * 0 0    0    1
+     */
+
+    Matrix matrix = Matrix(4);
+    matrix[0][0] = 1;
+    matrix[1][1] = cos(M_PI * a / 180);
+    matrix[1][2] = -sin(M_PI * a / 180);
+    matrix[2][1] = sin(M_PI * a / 180);
+    matrix[2][2] = cos(M_PI * a / 180);
+    matrix[3][3] = 1;
+    return matrix;
+}
+
+Matrix Camera::matrixRotateY(GLfloat a)
+{
+    /*
+     * Вокруг оси y
+     * cos  0 sin 0
+     * 0    1 0   0
+     * -sin 0 cos 0
+     * 0    0 0   1
+     */
+
+    Matrix matrix = Matrix(4);
+    matrix[0][0] = cos(M_PI * a / 180);
+    matrix[0][2] = -sin(M_PI * a / 180);
+    matrix[1][1] = 1;
+    matrix[2][0] = sin(M_PI * a / 180);
+    matrix[2][2] = cos(M_PI * a / 180);
+    matrix[3][3] = 1;
+    return matrix;
+}
+
+Matrix Camera::matrixRotateZ(GLfloat a)
+{
+    /*
+     * Вокруг оси z
+     * cos -sin 0 0
+     * sin  cos 0 0
+     * 0    0   1 0
+     * 0    0   0 1
+     */
+
+    Matrix matrix = Matrix(4);
+    matrix[0][0] = cos(M_PI * a / 180);
+    matrix[0][1] = sin(M_PI * a / 180);
+    matrix[1][0] = -sin(M_PI * a / 180);
+    matrix[1][1] = cos(M_PI * a / 180);
+    matrix[2][2] = 1;
+    matrix[3][3] = 1;
+    return matrix;
 }
 
 Point3D Camera::multiplication(const Point3D& point)
@@ -159,6 +215,7 @@ void Camera::findReverse()
             }
         }
     }
+
     qDebug() << "Camera";
     qDebug() << mat[0];
     qDebug() << mat[1];
