@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
+#include <QKeyEvent>
 #include <QDebug>
 
 #include "Commands/Offset.h"
@@ -11,6 +12,8 @@
 #include "Commands/Load.h"
 #include "Commands/Save.h"
 #include "Commands/AddParticle.h"
+#include "Commands/MoveCamera.h"
+#include "Commands/RotateCamera.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,19 +26,19 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void paintEvent(QPaintEvent*);
 
-private slots:
-    void on_btnOffset_clicked();
-    void on_btnRotate_clicked();
-    void on_btnScale_clicked();
-    void on_bntFile_clicked();
-    void on_btnSave_clicked();
+public:
+    void paintEvent(QPaintEvent*);
+    void keyPressEvent(QKeyEvent*);
+    void mousePressedEvent(QMouseEvent*);
+    void mouseMoveEvent(QMouseEvent*);
+    void wheelEvent(QWheelEvent*);
 
 private:
     Ui::MainWindow *ui;
 
     Scene facade;
+    Point2D prev;
 };
 
 #endif // __MAINWINDOW_H

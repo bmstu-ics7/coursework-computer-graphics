@@ -7,13 +7,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->canvas->setFacade(&facade);
-
-    for (double a = -5; a <= 5; a += 0.01) {
-        AddParticle(
-                cos(4 * a) * sin(a),
-                cos(4 * a) * cos(a),
-                0).execute(facade);
-    }
+    for (double x = -1; x <= 1; x += 0.05)
+        for (double y = -1; y <= 1; y += 0.05)
+            for (double z = -1; z <= 1; z += 0.05)
+                AddParticle(x, y, z).execute(facade);
 }
 
 MainWindow::~MainWindow()
@@ -21,90 +18,82 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent* e)
+{
+    switch (e->key()) {
+    case Qt::Key_Up:
+        RotateCamera(1, 0, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_Down:
+        RotateCamera(-1, 0, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_Left:
+        RotateCamera(0, -1, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_Right:
+        RotateCamera(0, 1, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_J:
+        MoveCamera(ActionMove::Forward, 0.95, 0.95, 0.95).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_K:
+        MoveCamera(ActionMove::Back, 1.05, 1.05, 1.05).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_W:
+        MoveCamera(ActionMove::Up, 0, 0.1, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_A:
+        MoveCamera(ActionMove::Left, -0.1, 0, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_S:
+        MoveCamera(ActionMove::Down, 0, -0.1, 0).execute(facade);
+        repaint();
+        break;
+    case Qt::Key_D:
+        MoveCamera(ActionMove::Right, 0.1, 0, 0).execute(facade);
+        repaint();
+        break;
+    }
+}
+
 void MainWindow::paintEvent(QPaintEvent*)
 {
     ui->canvas->update();
 }
 
-void MainWindow::on_btnOffset_clicked()
-{
-    double dx = ui->spinOffsetX->value();
-    double dy = ui->spinOffsetY->value();
-    double dz = ui->spinOffsetZ->value();
 
-    try {
-        ObjectIterator begin = facade.getObjects().beginObjects();
-        ObjectIterator end = facade.getObjects().endObjects();
-        Offset(begin, end, dx, dy, dz).execute(facade);
-    } catch (std::exception e) {
-        qDebug() << "offset exception";
-        qDebug() << e.what();
-    }
+void MainWindow::mousePressedEvent(QMouseEvent* e)
+{
+    prev = Point2D(e->x(), e->y());
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent* e)
+{
+    int y = 180 * (e->x() - prev.x()) / width();
+    int x = 180 * (e->y() - prev.y()) / height();
+
+    qDebug() << x << y;
+
+    RotateCamera((double)x, (double)y, 0).execute(facade);
+    prev = Point2D(e->x(), e->y());
 
     repaint();
 }
 
-void MainWindow::on_btnRotate_clicked()
+void MainWindow::wheelEvent(QWheelEvent* e)
 {
-    double ax = ui->spinRotateX->value();
-    double ay = ui->spinRotateY->value();
-    double az = ui->spinRotateZ->value();
-
-    try {
-        ObjectIterator begin = facade.getObjects().beginObjects();
-        ObjectIterator end = facade.getObjects().endObjects();
-        Rotate(begin, end, ax, ay, az).execute(facade);
-    } catch (std::exception e) {
-        qDebug() << "rotate exception";
-        qDebug() << e.what();
-    }
-
-    repaint();
-}
-
-void MainWindow::on_btnScale_clicked()
-{
-    double k = ui->spinScale->value();
-
-    try {
-        ObjectIterator begin = facade.getObjects().beginObjects();
-        ObjectIterator end = facade.getObjects().endObjects();
-        Scale(begin, end, k).execute(facade);
-    } catch (std::exception e) {
-        qDebug() << "scale exception";
-        qDebug() << e.what();
-    }
-
-    repaint();
-}
-
-void MainWindow::on_bntFile_clicked()
-{
-    try {
-        QString fileName = QFileDialog::getOpenFileName(this);
-        File file(fileName.toStdString().c_str());
-        ModelBuilder build;
-        Load(file, build).execute(facade);
-    } catch (std::exception e) {
-        qDebug() << "load exception";
-        qDebug() << e.what();
-    }
-
-    repaint();
-}
-
-void MainWindow::on_btnSave_clicked()
-{
-    try {
-        QString fileName = QFileDialog::getSaveFileName(this);
-        File file(fileName.toStdString().c_str());
-        ObjectIterator begin = facade.getObjects().beginObjects();
-        ObjectIterator end = facade.getObjects().endObjects();
-        Save(begin, end, file);
-    } catch (std::exception e) {
-        qDebug() << "save exception";
-        qDebug() << e.what();
-    }
+    if (e->delta() > 0)
+        MoveCamera(ActionMove::Back, 1.05, 1.05, 1.05).execute(facade);
+    else if (e->delta() < 0)
+        MoveCamera(ActionMove::Forward, 0.95, 0.95, 0.95).execute(facade);
 
     repaint();
 }

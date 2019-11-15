@@ -1,7 +1,7 @@
 #include "Drawing/QtDraw.h"
 
-QtDraw::QtDraw(QPainter& painter, const size_t w, const size_t h)
-    : Drawer(w, h), painter(painter){ }
+QtDraw::QtDraw(QPainter& painter, const size_t w, const size_t h, Camera camera)
+    : Drawer(w, h, camera), painter(painter){ }
 
 int QtDraw::round(double x)
 {

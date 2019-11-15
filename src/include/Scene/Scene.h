@@ -18,6 +18,8 @@ public:
     TransformManager& getTransformManager() { return transformMan; }
     DeleteManager& getDeleteManager() { return deleteMan; }
 
+    Camera& getMatrix() { return objects.getMatrix(); }
+
 private:
     SceneContainer objects;
 

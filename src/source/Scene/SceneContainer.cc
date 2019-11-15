@@ -44,3 +44,8 @@ PositionIterator SceneContainer::endPositions()
 {
     return positions.end();
 }
+
+Camera& SceneContainer::getMatrix()
+{
+    return currentCamera;
+}

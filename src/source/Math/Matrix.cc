@@ -15,7 +15,7 @@ Matrix::Matrix(size_t size) : _size(size)
     }
 }
 
-std::vector< GLfloat > Matrix::operator[](int index)
+std::vector< GLfloat >& Matrix::operator[](int index)
 {
     return _data[index];
 }
