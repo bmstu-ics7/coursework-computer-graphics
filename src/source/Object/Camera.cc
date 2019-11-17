@@ -28,20 +28,28 @@ void Camera::setPosition(GLfloat posX, GLfloat posY, GLfloat posZ)
 
 void Camera::move(GLfloat x, GLfloat y, GLfloat z, GLfloat distance)
 {
-    mat[0][3] += x * distance;
+    offsetX += x * distance;
+    offsetY += y * distance;
+    offsetZ += z * distance;
+
+    /*mat[0][3] += x * distance;
     mat[1][3] += y * distance;
     mat[2][3] += z * distance;
 
-    findReverse();
+    findReverse();*/
 }
 
 void Camera::scale(GLfloat x, GLfloat y, GLfloat z)
 {
-    mat[0][0] *= x;
+    scaleX *= x;
+    scaleY *= y;
+    scaleZ *= z;
+
+    /*mat[0][0] *= x;
     mat[1][1] *= y;
     mat[2][2] *= z;
 
-    findReverse();
+    findReverse();*/
 }
 
 void Camera::rotate(GLfloat x, GLfloat y, GLfloat z)
@@ -50,7 +58,7 @@ void Camera::rotate(GLfloat x, GLfloat y, GLfloat z)
     rotateY += y;
     rotateZ += z;
 
-    Matrix mx = matrixRotateX(x);
+   /*Matrix mx = matrixRotateX(x);
     Matrix my = matrixRotateY(y);
     Matrix mz = matrixRotateZ(z);
 
@@ -58,7 +66,7 @@ void Camera::rotate(GLfloat x, GLfloat y, GLfloat z)
     multiplicationMatrix(my);
     multiplicationMatrix(mz);
 
-    findReverse();
+    findReverse();*/
 }
 
 void Camera::multiplicationMatrix(Matrix& matrix)

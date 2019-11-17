@@ -16,13 +16,22 @@ public:
     void rotate(GLfloat x, GLfloat y, GLfloat z);
     Point3D multiplication(const Point3D& point);
 
-private:
-    Matrix mat;
-    Matrix reverse;
+    GLfloat offsetX = 0;
+    GLfloat offsetY = 0;
+    GLfloat offsetZ = 0;
+
+    GLfloat scaleX = 1;
+    GLfloat scaleY = 1;
+    GLfloat scaleZ = 1;
 
     GLfloat rotateX = 0;
     GLfloat rotateY = 0;
     GLfloat rotateZ = 0;
+
+private:
+    Matrix mat;
+    Matrix reverse;
+
 
 private:
     void findReverse();

@@ -13,3 +13,10 @@ void GLDraw::drawParticle(const Point3D& particle)
 {
     canvas.drawParticle(camera.multiplication(particle));
 }
+
+void GLDraw::setCamera()
+{
+    canvas.setCamera(camera.offsetX, camera.offsetY, camera.offsetZ,
+                     camera.scaleX, camera.scaleY, camera.scaleZ,
+                     camera.rotateX, camera.rotateY, camera.rotateZ);
+}
