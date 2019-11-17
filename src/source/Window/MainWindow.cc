@@ -7,10 +7,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->canvas->setFacade(&facade);
-    for (double x = -1; x <= 1; x += 0.05)
+    QRandomGenerator gen;
+
+    for (double x = -2; x <= 2; x += 0.05)
         for (double y = -1; y <= 1; y += 0.05)
-            for (double z = -1; z <= 1; z += 0.05)
-                AddParticle(x, y, z).execute(facade);
+            for (double z = -1; z <= 1; z += 0.05) {
+                AddParticle((gen.generateDouble() * x - x),
+                            (gen.generateDouble() * y - y),
+                            (gen.generateDouble() * z - z)).execute(facade);
+            }
+                //AddParticle(x, y, z).execute(facade);
 }
 
 MainWindow::~MainWindow()
@@ -22,19 +28,19 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 {
     switch (e->key()) {
     case Qt::Key_Up:
-        RotateCamera(1, 0, 0).execute(facade);
+        RotateCamera(2, 0, 0).execute(facade);
         repaint();
         break;
     case Qt::Key_Down:
-        RotateCamera(-1, 0, 0).execute(facade);
+        RotateCamera(-2, 0, 0).execute(facade);
         repaint();
         break;
     case Qt::Key_Left:
-        RotateCamera(0, -1, 0).execute(facade);
+        RotateCamera(0, -2, 0).execute(facade);
         repaint();
         break;
     case Qt::Key_Right:
-        RotateCamera(0, 1, 0).execute(facade);
+        RotateCamera(0, 2, 0).execute(facade);
         repaint();
         break;
     case Qt::Key_J:

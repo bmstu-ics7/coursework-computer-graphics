@@ -16,20 +16,18 @@ void OpenGLWidget::resizeGL(int newWidth, int newHeight)
 {
     _width = newWidth;
     _height = newHeight;
-    //glMatrixMode(GL_PROJECTION);
-    //glLoadIdentity();
-    //glFrustum(-_width, _width, -_height, _height, 500.0f, 500.0f);
-    //glViewport(0, 0, (GLint)_width, (GLint)_height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glFrustum(-_width, _width, -_height, _height, 500.0f, 500.0f);
+    glViewport(0, 0, (GLint)_width, (GLint)_height);
 }
 
 void OpenGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    //glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
 
-    //glFrustum(-_width, _width, -_height, _height, 500.0f, 500.0f);
-    //glViewport(0, 0, (GLint)_width * 2, (GLint)_height * 2);
+    glPushMatrix();
+    glMatrixMode(GL_PROJECTION);
 
     try {
         ObjectIterator begin = facade->getObjects().beginObjects();
@@ -42,6 +40,8 @@ void OpenGLWidget::paintGL()
         qDebug() << "paint exception";
         qDebug() << e.what();
     }
+
+    glPopMatrix();
 }
 
 void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
@@ -73,3 +73,14 @@ void OpenGLWidget::setFacade(Scene* facade)
 size_t OpenGLWidget::widht() { return _width; }
 
 size_t OpenGLWidget::height() { return _height; }
+
+void OpenGLWidget::setCamera(GLfloat ox, GLfloat oy, GLfloat oz,
+                             GLfloat sx, GLfloat sy, GLfloat sz,
+                             GLfloat ax, GLfloat ay, GLfloat az)
+{
+    glTranslatef(ox, oy, oz);
+    glScalef(sx, sy, sz);
+    glRotatef(ax, 1.0f, 0.0f, 0.0f);
+    glRotatef(ay, 0.0f, 1.0f, 0.0f);
+    glRotatef(az, 0.0f, 0.0f, 1.0f);
+}
