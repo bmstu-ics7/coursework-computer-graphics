@@ -53,6 +53,7 @@ set(HEADERS
     include/Scene/Iterator.h
     include/Scene/Scene.h
     include/Scene/SceneContainer.h
+    include/PerlinNoise.hpp
 )
 
 set(SOURCES

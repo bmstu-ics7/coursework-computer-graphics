@@ -18,7 +18,7 @@ void OpenGLWidget::resizeGL(int newWidth, int newHeight)
     _height = newHeight;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glFrustum(-_width, _width, -_height, _height, 500.0f, 500.0f);
+    glFrustum(-1.0f, 1.0f, -1.0f, -1.0f, 0.5f, 500.0f);
     glViewport(0, 0, (GLint)_width, (GLint)_height);
 }
 
@@ -66,6 +66,7 @@ void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
 
 void OpenGLWidget::drawParticle(const Point3D& particle)
 {
+
     glPointSize(3.0f);
     glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
     glEnable(GL_POINT_SMOOTH);
@@ -74,6 +75,7 @@ void OpenGLWidget::drawParticle(const Point3D& particle)
         glColor3f(1.0f, 1.0f, 1.0f);
         glVertex3f((GLfloat)particle.x(), (GLfloat)particle.y(), (GLfloat)particle.z());
     glEnd();
+
     /*
     glPushMatrix();
     glTranslatef(particle.x(), particle.y(), particle.z());

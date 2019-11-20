@@ -1,5 +1,6 @@
 #include "Window/MainWindow.h"
 #include "ui_MainWindow.h"
+#include "PerlinNoise.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,14 +9,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->canvas->setFacade(&facade);
     QRandomGenerator gen;
-
+/*
     for (double x = -2; x <= 2; x += 0.1)
         for (double y = -1; y <= 1; y += 0.1)
             for (double z = -1; z <= 1; z += 0.1) {
                 AddParticle((gen.generateDouble() * x - x),
                             (gen.generateDouble() * y - y),
                             (gen.generateDouble() * z - z)).execute(facade);
-            }
+            }*/
+    siv::PerlinNoise noise;
+
+    for (double theta = 0; theta < 360; theta += 2) {
+        for (double phi = 0; phi < 360;   phi += 2) {
+            double x, y, z, r;
+            x = sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
+            y = sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
+            z = cos(theta * M_PI / 180);
+            r = noise.octaveNoise0_1(x, y, z, 8.0);
+            qDebug() << x << y << z << r;
+            x *= r;
+            y *= r;
+            z *= r;
+            AddParticle(x, y, z).execute(facade);
+        }
+    }
 }
 
 MainWindow::~MainWindow()
@@ -84,8 +101,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent* e)
 {
     int y = 180 * (e->x() - prev.x()) / width();
     int x = 180 * (e->y() - prev.y()) / height();
-
-    qDebug() << x << y;
 
     RotateCamera((double)x, (double)y, 0).execute(facade);
     prev = Point2D(e->x(), e->y());
