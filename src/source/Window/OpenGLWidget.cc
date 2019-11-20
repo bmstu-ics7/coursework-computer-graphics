@@ -3,13 +3,13 @@
 #include <QDebug>
 
 OpenGLWidget::OpenGLWidget(QWidget* parent)
-    : QOpenGLWidget(parent)
-{
-}
+    : QOpenGLWidget(parent) { }
 
 void OpenGLWidget::initializeGL()
 {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_NORMALIZE);
 }
 
 void OpenGLWidget::resizeGL(int newWidth, int newHeight)
@@ -28,6 +28,16 @@ void OpenGLWidget::paintGL()
 
     glPushMatrix();
     glMatrixMode(GL_PROJECTION);
+    glShadeModel(GL_SMOOTH);
+
+    GLfloat material_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse);
+
+    GLfloat light0_diffuse[] = {1.0, 1.0, 1.0};
+    GLfloat light0_direction[] = {1.0, 1.0, 1.0, 0.0};
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+    glLightfv(GL_LIGHT0, GL_POSITION, light0_direction);
 
     try {
         ObjectIterator begin = facade->getObjects().beginObjects();
@@ -42,6 +52,7 @@ void OpenGLWidget::paintGL()
     }
 
     glPopMatrix();
+    glDisable(GL_LIGHT0);
 }
 
 void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
@@ -63,6 +74,12 @@ void OpenGLWidget::drawParticle(const Point3D& particle)
         glColor3f(1.0f, 1.0f, 1.0f);
         glVertex3f((GLfloat)particle.x(), (GLfloat)particle.y(), (GLfloat)particle.z());
     glEnd();
+    /*
+    glPushMatrix();
+    glTranslatef(particle.x(), particle.y(), particle.z());
+    gluSphere(gluNewQuadric(), 0.02, 10, 10);
+    glPopMatrix();
+    */
 }
 
 void OpenGLWidget::setFacade(Scene* facade)
@@ -80,7 +97,7 @@ void OpenGLWidget::setCamera(GLfloat ox, GLfloat oy, GLfloat oz,
 {
     glTranslatef(ox, oy, oz);
     glScalef(sx, sy, sz);
-    glRotatef(ax, 1.0f, 0.0f, 0.0f);
+    glRotatef(ax, 1.0f, 0.0f, 0.0f) ;
     glRotatef(ay, 0.0f, 1.0f, 0.0f);
     glRotatef(az, 0.0f, 0.0f, 1.0f);
 }

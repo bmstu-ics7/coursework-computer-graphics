@@ -9,14 +9,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->canvas->setFacade(&facade);
     QRandomGenerator gen;
 
-    for (double x = -2; x <= 2; x += 0.05)
-        for (double y = -1; y <= 1; y += 0.05)
-            for (double z = -1; z <= 1; z += 0.05) {
+    for (double x = -2; x <= 2; x += 0.1)
+        for (double y = -1; y <= 1; y += 0.1)
+            for (double z = -1; z <= 1; z += 0.1) {
                 AddParticle((gen.generateDouble() * x - x),
                             (gen.generateDouble() * y - y),
                             (gen.generateDouble() * z - z)).execute(facade);
             }
-                //AddParticle(x, y, z).execute(facade);
 }
 
 MainWindow::~MainWindow()

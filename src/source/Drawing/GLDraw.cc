@@ -6,17 +6,17 @@ GLDraw::GLDraw(OpenGLWidget& canvas, Camera camera)
 
 void GLDraw::drawLine(const Point3D& a, const Point3D& b)
 {
-    canvas.drawLine(camera.multiplication(a), camera.multiplication(b));
+    canvas.drawLine(a, b);
 }
 
 void GLDraw::drawParticle(const Point3D& particle)
 {
-    canvas.drawParticle(camera.multiplication(particle));
+    canvas.drawParticle(particle);
 }
 
 void GLDraw::setCamera()
 {
-    canvas.setCamera(camera.offsetX, camera.offsetY, camera.offsetZ,
-                     camera.scaleX, camera.scaleY, camera.scaleZ,
-                     camera.rotateX, camera.rotateY, camera.rotateZ);
+    canvas.setCamera(camera.offsetX(), camera.offsetY(), camera.offsetZ(),
+                     camera.scaleX(), camera.scaleY(), camera.scaleZ(),
+                     camera.rotateX(), camera.rotateY(), camera.rotateZ());
 }

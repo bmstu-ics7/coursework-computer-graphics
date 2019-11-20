@@ -1,44 +1,44 @@
 #ifndef __CAMERA_H
 #define __CAMERA_H
 
-//#include "UnvisibleObject.h"
 #include "Math/Matrix.h"
 #include "Point3D.h"
 
-class Camera// : public UnvisibleObject
+class Camera
 {
 public:
-    Camera();
-    Camera(GLfloat posX, GLfloat posY, GLfloat posZ);
-    void setPosition(GLfloat posX, GLfloat posY, GLfloat posZ);
+    Camera() { }
     void move(GLfloat x, GLfloat y, GLfloat z, GLfloat distance = 1);
     void scale(GLfloat x, GLfloat y, GLfloat z);
     void rotate(GLfloat x, GLfloat y, GLfloat z);
-    Point3D multiplication(const Point3D& point);
 
-    GLfloat offsetX = 0;
-    GLfloat offsetY = 0;
-    GLfloat offsetZ = 0;
+    GLfloat offsetX() { return _offsetX; }
+    GLfloat offsetY() { return _offsetY; }
+    GLfloat offsetZ() { return _offsetZ; }
 
-    GLfloat scaleX = 1;
-    GLfloat scaleY = 1;
-    GLfloat scaleZ = 1;
+    GLfloat scaleX() { return _scaleX; }
+    GLfloat scaleY() { return _scaleY; }
+    GLfloat scaleZ() { return _scaleZ; }
 
-    GLfloat rotateX = 0;
-    GLfloat rotateY = 0;
-    GLfloat rotateZ = 0;
-
-private:
-    Matrix mat;
-    Matrix reverse;
-
+    GLfloat rotateX() { return _rotateX; }
+    GLfloat rotateY() { return _rotateY; }
+    GLfloat rotateZ() { return _rotateZ; }
 
 private:
-    void findReverse();
-    void multiplicationMatrix(Matrix& matrix);
-    Matrix matrixRotateX(GLfloat a);
-    Matrix matrixRotateY(GLfloat a);
-    Matrix matrixRotateZ(GLfloat a);
+    GLfloat _offsetX = 0;
+    GLfloat _offsetY = 0;
+    GLfloat _offsetZ = 0;
+
+    GLfloat _scaleX = 1;
+    GLfloat _scaleY = 1;
+    GLfloat _scaleZ = 1;
+
+    GLfloat _rotateX = 0;
+    GLfloat _rotateY = 0;
+    GLfloat _rotateZ = 0;
+
+
+private:
 };
 
 #endif // __CAMERA_H

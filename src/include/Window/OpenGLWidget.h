@@ -2,6 +2,7 @@
 #define __OPENGLWIDGET_H
 
 #include <QtOpenGL>
+#include <GL/glu.h>
 #include <QOpenGLWidget>
 #include "Object/Point3D.h"
 #include "Scene/Scene.h"
