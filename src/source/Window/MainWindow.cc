@@ -1,6 +1,6 @@
 #include "Window/MainWindow.h"
 #include "ui_MainWindow.h"
-#include "PerlinNoise.hpp"
+#include "Math/PerlinNoise.hpp"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
             x = sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
             y = sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
             z = cos(theta * M_PI / 180);
-            r = noise.octaveNoise0_1(x, y, z, 8.0);
-            qDebug() << x << y << z << r;
+            r = noise.octaveNoise0_1(x / 2, y / 2, z / 2, 8.0);
+            //qDebug() << x << y << z << r;
             x *= r;
             y *= r;
             z *= r;
