@@ -24,7 +24,7 @@ void OpenGLWidget::resizeGL(int newWidth, int newHeight)
 
 void OpenGLWidget::paintGL()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
     glPushMatrix();
     glMatrixMode(GL_PROJECTION);
@@ -66,8 +66,7 @@ void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
 
 void OpenGLWidget::drawParticle(const Point3D& particle)
 {
-
-    glPointSize(3.0f);
+    glPointSize(1.0f);
     glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
     glEnable(GL_POINT_SMOOTH);
 
@@ -75,7 +74,6 @@ void OpenGLWidget::drawParticle(const Point3D& particle)
         glColor3f(1.0f, 1.0f, 1.0f);
         glVertex3f((GLfloat)particle.x(), (GLfloat)particle.y(), (GLfloat)particle.z());
     glEnd();
-
     /*
     glPushMatrix();
     glTranslatef(particle.x(), particle.y(), particle.z());

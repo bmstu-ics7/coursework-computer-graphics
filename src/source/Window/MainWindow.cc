@@ -11,8 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QRandomGenerator gen;
     siv::PerlinNoise noise;
 
-    for (double theta = 0; theta < 360; theta += 2) {
-        for (double phi = 0; phi < 360;   phi += 2) {
+    for (double theta = 0; theta < 360; theta += 1) {
+        for (double phi = 0; phi < 360;   phi += 1) {
             double x, y, z, r;
             x = sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
             y = sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
