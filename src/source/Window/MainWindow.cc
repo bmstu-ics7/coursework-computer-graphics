@@ -9,14 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->canvas->setFacade(&facade);
     QRandomGenerator gen;
-/*
-    for (double x = -2; x <= 2; x += 0.1)
-        for (double y = -1; y <= 1; y += 0.1)
-            for (double z = -1; z <= 1; z += 0.1) {
-                AddParticle((gen.generateDouble() * x - x),
-                            (gen.generateDouble() * y - y),
-                            (gen.generateDouble() * z - z)).execute(facade);
-            }*/
     siv::PerlinNoise noise;
 
     for (double theta = 0; theta < 360; theta += 2) {
@@ -26,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
             y = sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
             z = cos(theta * M_PI / 180);
             r = noise.octaveNoise0_1(x / 2, y / 2, z / 2, 8.0);
-            //qDebug() << x << y << z << r;
+
             x *= r;
             y *= r;
             z *= r;
