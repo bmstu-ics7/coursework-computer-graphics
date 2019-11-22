@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <vector>
+#include <memory>
 
 class Object;
 class Position;

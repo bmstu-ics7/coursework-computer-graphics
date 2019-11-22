@@ -1,6 +1,12 @@
 #ifndef __OPENGLWIDGET_H
 #define __OPENGLWIDGET_H
 
+#ifndef __APPLE__
+#include <OpenGL/glu.h>
+#elif __linux__
+#include <GL/glu.h>
+#endif
+
 #include <QtOpenGL>
 #include <QOpenGLWidget>
 #include "Object/Point3D.h"
@@ -14,7 +20,7 @@ public:
     OpenGLWidget(QWidget* parent = 0);
 
     void drawLine(const Point3D& a, const Point3D& b);
-    void drawParticle(const Point3D& particle);
+    void drawParticle(const Point3D& particle, double r, double g, double b);
 
     void setFacade(Scene* facade);
 
