@@ -9,9 +9,9 @@ void GLDraw::drawLine(const Point3D& a, const Point3D& b)
     canvas.drawLine(a, b);
 }
 
-void GLDraw::drawParticle(const Point3D& particle)
+void GLDraw::drawParticle(const Point3D& particle, double r, double g, double b)
 {
-    canvas.drawParticle(particle);
+    canvas.drawParticle(particle, r, g, b);
 }
 
 void GLDraw::setCamera()

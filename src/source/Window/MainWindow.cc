@@ -10,19 +10,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->canvas->setFacade(&facade);
     QRandomGenerator gen;
     siv::PerlinNoise noise;
-
+/*
     for (double theta = 0; theta < 360; theta += 1) {
         for (double phi = 0; phi < 360;   phi += 1) {
             double x, y, z, r;
-            x = sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
-            y = sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
-            z = cos(theta * M_PI / 180);
-            r = noise.octaveNoise0_1(x / 2, y / 2, z / 2, 8.0);
+            x = 1 * sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
+            y = 1 * sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
+            z = 1 * cos(theta * M_PI / 180);
+
+            r = noise.octaveNoise0_1(x / 10, y / 10, z / 10, 8.0);
 
             x *= r;
             y *= r;
             z *= r;
-            AddParticle(x, y, z).execute(facade);
+
+            AddParticle(x, y, z, r, r, r).execute(facade);
+        }
+    }
+    */
+
+    noise.reseed(gen.generate64());
+    for (double x = -1; x <= 1; x += 0.002) {
+        for (double y = -1; y <= 1; y += 0.002) {
+            double c = noise.octaveNoise0_1(x, y, 8);
+            AddParticle(x, y, 0, c, c ,c).execute(facade);
         }
     }
 }

@@ -10,7 +10,7 @@ class GLDraw : public Drawer
 public:
     GLDraw(OpenGLWidget& canvas, Camera camera);
     void drawLine(const Point3D& a, const Point3D& b) override;
-    void drawParticle(const Point3D& particle) override;
+    void drawParticle(const Point3D& particle, double r, double g, double b) override;
     void setCamera() override;
 
 private:
