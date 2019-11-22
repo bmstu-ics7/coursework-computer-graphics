@@ -30,7 +30,7 @@ void OpenGLWidget::paintGL()
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);
 
-    glOrtho(-1, 1, -1, 1, 0, 20);
+    glOrtho(-1, 1, -1, 1, -2, 20);
 
     // glShadeModel(GL_SMOOTH);
 
