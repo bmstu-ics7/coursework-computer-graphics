@@ -10,7 +10,7 @@ public:
     Camera() { }
     void move(GLfloat x, GLfloat y, GLfloat z, GLfloat distance = 1);
     void scale(GLfloat x, GLfloat y, GLfloat z);
-    void rotate(GLfloat x, GLfloat y, GLfloat z);
+    void rotate(GLint x, GLint y, GLint z);
 
     GLfloat offsetX() { return _offsetX; }
     GLfloat offsetY() { return _offsetY; }
@@ -20,9 +20,9 @@ public:
     GLfloat scaleY() { return _scaleY; }
     GLfloat scaleZ() { return _scaleZ; }
 
-    GLfloat rotateX() { return _rotateX; }
-    GLfloat rotateY() { return _rotateY; }
-    GLfloat rotateZ() { return _rotateZ; }
+    GLint rotateX() { return _rotateX; }
+    GLint rotateY() { return _rotateY; }
+    GLint rotateZ() { return _rotateZ; }
 
 private:
     GLfloat _offsetX = 0;
@@ -33,12 +33,9 @@ private:
     GLfloat _scaleY = 1;
     GLfloat _scaleZ = 1;
 
-    GLfloat _rotateX = 0;
-    GLfloat _rotateY = 0;
-    GLfloat _rotateZ = 0;
-
-
-private:
+    GLint _rotateX = 0;
+    GLint _rotateY = 0;
+    GLint _rotateZ = 0;
 };
 
 #endif // __CAMERA_H
