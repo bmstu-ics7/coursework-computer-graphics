@@ -14,6 +14,11 @@ void GLDraw::drawParticle(const Point3D& particle, double r, double g, double b)
     canvas.drawParticle(particle, r, g, b);
 }
 
+void GLDraw::skyCube()
+{
+    canvas.skyCube();
+}
+
 void GLDraw::setCamera()
 {
     canvas.setCamera(camera.offsetX(), camera.offsetY(), camera.offsetZ(),

@@ -29,6 +29,9 @@ void OpenGLWidget::paintGL()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);
+
+    glOrtho(-1, 1, -1, 1, 0, 20);
+
     // glShadeModel(GL_SMOOTH);
 
     /*
@@ -168,4 +171,80 @@ void OpenGLWidget::setCamera(GLfloat ox, GLfloat oy, GLfloat oz,
     glRotatef(ax, 1.0f, 0.0f, 0.0f) ;
     glRotatef(ay, 0.0f, 1.0f, 0.0f);
     glRotatef(az, 0.0f, 0.0f, 1.0f);
+}
+
+void OpenGLWidget::skyCube()
+{
+    glMatrixMode(GL_MODELVIEW);
+    const double d = 10;
+
+    double verges[6][4][3] =
+    {
+        {
+            // Лицевая грань
+            { -d, +d, +d },
+            { +d, +d, +d },
+            { +d, -d, +d },
+            { -d, -d, +d }
+        },
+
+        {
+            // Задняя грань
+            { -d, +d, -d },
+            { +d, +d, -d },
+            { +d, -d, -d },
+            { -d, -d, -d }
+        },
+
+        {
+            // Левая грань
+            { -d, +d, +d },
+            { -d, +d, -d },
+            { -d, -d, -d },
+            { -d, -d, +d }
+        },
+
+        {
+            // Правая грань
+            { +d, +d, +d },
+            { +d, +d, -d },
+            { +d, -d, -d },
+            { +d, -d, +d }
+        },
+
+        {
+            // Верхняя грань
+            { -d, +d, +d },
+            { -d, +d, -d },
+            { +d, +d, -d },
+            { +d, +d, +d }
+        },
+
+        {
+            // Нижняя грань
+            { -d, -d, +d },
+            { -d, -d, -d },
+            { +d, -d, -d },
+            { +d, -d, +d }
+        }
+    };
+
+    GLfloat colors[6][3] =
+    {
+        {1.0, 0.0, 0.0},
+        {0.0, 1.0, 0.0},
+        {0.0, 0.0, 1.0},
+        {1.0, 0.0, 1.0},
+        {1.0, 1.0, 0.0},
+        {0.0, 1.0, 1.0}
+    };
+
+    for (int i = 0; i < 6; ++i) {
+        glBegin(GL_QUADS);
+            glColor3f(colors[i][0], colors[i][1], colors[i][2]);
+            for (int j = 0; j < 4; ++j) {
+                glVertex3f(verges[i][j][0], verges[i][j][1], verges[i][j][2]);
+            }
+        glEnd();
+    }
 }
