@@ -173,7 +173,7 @@ void OpenGLWidget::setCamera(GLfloat ox, GLfloat oy, GLfloat oz,
     glRotatef(az, 0.0f, 0.0f, 1.0f);
 }
 
-void OpenGLWidget::skyCube()
+void OpenGLWidget::skyBox()
 {
     glMatrixMode(GL_MODELVIEW);
     const double d = 10;

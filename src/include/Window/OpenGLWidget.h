@@ -27,7 +27,7 @@ public:
     size_t widht();
     size_t height();
 
-    void skyCube();
+    void skyBox();
     void setCamera(GLfloat ox, GLfloat oy, GLfloat oz,
                    GLfloat sx, GLfloat sy, GLfloat sz,
                    GLfloat ax, GLfloat ay, GLfloat az);
