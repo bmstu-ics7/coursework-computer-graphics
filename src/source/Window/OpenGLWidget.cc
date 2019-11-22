@@ -16,7 +16,6 @@ void OpenGLWidget::resizeGL(int newWidth, int newHeight)
 {
     _width = newWidth;
     _height = newHeight;
-    qDebug() << _width << _height;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0, 0, (GLint)_width, (GLint)_height);
@@ -24,20 +23,24 @@ void OpenGLWidget::resizeGL(int newWidth, int newHeight)
 
 void OpenGLWidget::paintGL()
 {
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 
     glPushMatrix();
-    glMatrixMode(GL_PROJECTION);
-    glShadeModel(GL_SMOOTH);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glEnable(GL_DEPTH_TEST);
+    // glShadeModel(GL_SMOOTH);
 
-    // GLfloat material_diffuse[] = {1.0, 1.0, 1.0, 1.0};
-    // glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse);
+    /*
+    GLfloat material_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse);
 
-    // GLfloat light0_diffuse[] = {1.0, 1.0, 1.0};
-    // GLfloat light0_direction[] = {1.0, 1.0, 1.0, 0.0};
-    // glEnable(GL_LIGHT0);
-    // glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
-    // glLightfv(GL_LIGHT0, GL_POSITION, light0_direction);
+    GLfloat light0_diffuse[] = {1.0, 1.0, 1.0};
+    GLfloat light0_direction[] = {1.0, 1.0, 1.0, 0.0};
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+    glLightfv(GL_LIGHT0, GL_POSITION, light0_direction);
+    */
 
     try {
         ObjectIterator begin = facade->getObjects().beginObjects();
@@ -66,6 +69,70 @@ void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
 
 void OpenGLWidget::drawParticle(const Point3D& particle, double r, double g, double b)
 {
+    glMatrixMode(GL_MODELVIEW);
+    const double d = 0.01;
+
+    double verges[6][4][3] =
+    {
+        {
+            // Лицевая грань
+            { particle.x() - d, particle.y() + d, particle.z() + d },
+            { particle.x() + d, particle.y() + d, particle.z() + d },
+            { particle.x() + d, particle.y() - d, particle.z() + d },
+            { particle.x() - d, particle.y() - d, particle.z() + d }
+        },
+
+        {
+            // Задняя грань
+            { particle.x() - d, particle.y() + d, particle.z() - d },
+            { particle.x() + d, particle.y() + d, particle.z() - d },
+            { particle.x() + d, particle.y() - d, particle.z() - d },
+            { particle.x() - d, particle.y() - d, particle.z() - d }
+        },
+
+        {
+            // Левая грань
+            { particle.x() - d, particle.y() + d, particle.z() + d },
+            { particle.x() - d, particle.y() + d, particle.z() - d },
+            { particle.x() - d, particle.y() - d, particle.z() - d },
+            { particle.x() - d, particle.y() - d, particle.z() + d }
+        },
+
+        {
+            // Правая грань
+            { particle.x() + d, particle.y() + d, particle.z() + d },
+            { particle.x() + d, particle.y() + d, particle.z() - d },
+            { particle.x() + d, particle.y() - d, particle.z() - d },
+            { particle.x() + d, particle.y() - d, particle.z() + d }
+        },
+
+        {
+            // Верхняя грань
+            { particle.x() - d, particle.y() + d, particle.z() + d },
+            { particle.x() - d, particle.y() + d, particle.z() - d },
+            { particle.x() + d, particle.y() + d, particle.z() - d },
+            { particle.x() + d, particle.y() + d, particle.z() + d }
+        },
+
+        {
+            // Нижняя грань
+            { particle.x() - d, particle.y() - d, particle.z() + d },
+            { particle.x() - d, particle.y() - d, particle.z() - d },
+            { particle.x() + d, particle.y() - d, particle.z() - d },
+            { particle.x() + d, particle.y() - d, particle.z() + d }
+        }
+    };
+
+    for (int i = 0; i < 6; ++i) {
+        glBegin(GL_QUADS);
+            glColor3f(r, g, b);
+            for (int j = 0; j < 4; ++j) {
+                glVertex3f(verges[i][j][0], verges[i][j][1], verges[i][j][2]);
+            }
+        glEnd();
+    }
+
+    /*
     glPointSize(1.0f);
     glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
     glEnable(GL_POINT_SMOOTH);
@@ -74,6 +141,7 @@ void OpenGLWidget::drawParticle(const Point3D& particle, double r, double g, dou
         glColor3f(r, g, b);
         glVertex3f((GLfloat)particle.x(), (GLfloat)particle.y(), (GLfloat)particle.z());
     glEnd();
+    */
     /*
     glPushMatrix();
     glTranslatef(particle.x(), particle.y(), particle.z());

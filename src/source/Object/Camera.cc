@@ -15,9 +15,13 @@ void Camera::scale(GLfloat x, GLfloat y, GLfloat z)
     _scaleZ *= z;
 }
 
-void Camera::rotate(GLfloat x, GLfloat y, GLfloat z)
+void Camera::rotate(GLint x, GLint y, GLint z)
 {
     _rotateX += x;
     _rotateY += y;
     _rotateZ += z;
+
+    _rotateX %= 360;
+    _rotateY %= 360;
+    _rotateZ %= 360;
 }
