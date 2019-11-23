@@ -29,8 +29,9 @@ void OpenGLWidget::paintGL()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_MULTISAMPLE);
 
-    glOrtho(-1, 1, -1, 1, -2, 20);
+    glOrtho(-(GLfloat)_width / 600, (GLfloat)_width / 600, -(GLfloat)_height / 600, (GLfloat)_height / 600, -2, 200);
 
     // glShadeModel(GL_SMOOTH);
 
@@ -176,7 +177,7 @@ void OpenGLWidget::setCamera(GLfloat ox, GLfloat oy, GLfloat oz,
 void OpenGLWidget::skyBox()
 {
     glMatrixMode(GL_MODELVIEW);
-    const double d = 10;
+    const double d = 100;
 
     double verges[6][4][3] =
     {
