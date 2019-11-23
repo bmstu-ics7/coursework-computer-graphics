@@ -28,8 +28,10 @@ void OpenGLWidget::paintGL()
     glPushMatrix();
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
+    glEnable(GL_TEXTURE_2D);
 
     glOrtho(-(GLfloat)_width / 600, (GLfloat)_width / 600, -(GLfloat)_height / 600, (GLfloat)_height / 600, -2, 200);
 
@@ -74,7 +76,7 @@ void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
 void OpenGLWidget::drawParticle(const Point3D& particle, double r, double g, double b)
 {
     glMatrixMode(GL_MODELVIEW);
-    const double d = 0.01;
+    const double d = 0.03;
 
     double verges[6][4][3] =
     {

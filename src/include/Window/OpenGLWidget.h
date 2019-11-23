@@ -42,6 +42,8 @@ private:
 
     size_t _width;
     size_t _height;
+
+    GLuint texture;
 };
 
 #endif // __OPENGLWIDGET_H

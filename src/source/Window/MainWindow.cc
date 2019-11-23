@@ -12,25 +12,48 @@ MainWindow::MainWindow(QWidget *parent) :
     srand(time(NULL));
 
     siv::PerlinNoise noise;
-    std::uint32_t rnd = rand();
-    noise.reseed(rnd);
+    noise.reseed(rand());
 
-    for (double theta = 0; theta < 360; theta += 1) {
-        for (double phi = 0; phi < 360;   phi += 1) {
+    for (double theta = 0; theta < 360; theta += 2) {
+        for (double phi = 0; phi < 360;   phi += 2) {
             double x, y, z, r;
-            x = 1 * sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
-            y = 1 * sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
-            z = 1 * cos(theta * M_PI / 180);
+            x = sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
+            y = sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
+            z = cos(theta * M_PI / 180);
 
             r = noise.octaveNoise0_1(x / 2, y / 2, z / 2, 8.0);
 
-            x *= r;
+            x *= 2 * r;
             y *= r;
             z *= r;
 
-            AddParticle(x, y, z, r, r, r).execute(facade);
+            x -= 1.5;
+
+            AddParticle(x, y, z, r - 0.2, r - 0.2, r - 0.2).execute(facade);
         }
     }
+
+    noise.reseed(rand());
+
+    for (double theta = 0; theta < 360; theta += 2) {
+        for (double phi = 0; phi < 360;   phi += 2) {
+            double x, y, z, r;
+            x = sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
+            y = sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
+            z = cos(theta * M_PI / 180);
+
+            r = noise.octaveNoise0_1(x / 2, y / 2, z / 2, 8.0);
+
+            x *= 2 * r;
+            y *= r;
+            z *= r;
+
+            x += 1.5;
+
+            AddParticle(x, y, z, r + 0.2, r + 0.2, r + 0.2).execute(facade);
+        }
+    }
+
 /*
     for (double x = -1; x <= 1; x += 0.004) {
         for (double y = -1; y <= 1; y += 0.004) {
