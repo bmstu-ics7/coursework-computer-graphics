@@ -1,12 +1,7 @@
 #ifndef __OPENGLWIDGET_H
 #define __OPENGLWIDGET_H
 
-#ifndef __APPLE__
 #include <OpenGL/glu.h>
-#elif __linux__
-#include <GL/glu.h>
-#endif
-
 #include <QtOpenGL>
 #include <QOpenGLWidget>
 #include "Object/Point3D.h"
@@ -27,6 +22,7 @@ public:
     size_t widht();
     size_t height();
 
+    void skyBox();
     void setCamera(GLfloat ox, GLfloat oy, GLfloat oz,
                    GLfloat sx, GLfloat sy, GLfloat sz,
                    GLfloat ax, GLfloat ay, GLfloat az);
@@ -41,6 +37,8 @@ private:
 
     size_t _width;
     size_t _height;
+
+    GLuint texture;
 };
 
 #endif // __OPENGLWIDGET_H

@@ -54,6 +54,7 @@ set(HEADERS
     include/Scene/Scene.h
     include/Scene/SceneContainer.h
     include/Math/PerlinNoise.hpp
+    include/Math/TileableVolumeNoise.h
 )
 
 set(SOURCES
@@ -84,6 +85,7 @@ set(SOURCES
     source/Object/Particle.cc
     source/Scene/SceneContainer.cc
     source/Math/Matrix.cc
+    source/Math/TileableVolumeNoise.cc
 )
 
 set(GUI
