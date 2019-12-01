@@ -1,6 +1,30 @@
 #include "Window/MainWindow.h"
 #include "ui_MainWindow.h"
 #include "Math/PerlinNoise.hpp"
+#include "Math/TileableVolumeNoise.h"
+
+void MainWindow::addCloud(glm::vec3 center, glm::vec3 coefficient)
+{
+    double x, y, z, r;
+    siv::PerlinNoise noise;
+    noise.reseed(rand());
+
+    for (double theta = 0; theta < 360; theta += 2) {
+        for (double phi = 0; phi < 360;   phi += 2) {
+            x = coefficient[0] * sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
+            y = coefficient[1] * sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
+            z = coefficient[2] * cos(theta * M_PI / 180);
+
+            r = noise.octaveNoise0_1(x / 2, y / 2, z / 2, 8);
+
+            x = center[0] + x * r;
+            y = center[1] + y * r;
+            z = center[2] + z * r;
+
+            AddParticle(x, y, z, r, r, r).execute(facade);
+        }
+    }
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,57 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     srand(time(NULL));
 
-    siv::PerlinNoise noise;
-    noise.reseed(rand());
-
-    for (double theta = 0; theta < 360; theta += 2) {
-        for (double phi = 0; phi < 360;   phi += 2) {
-            double x, y, z, r;
-            x = sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
-            y = sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
-            z = cos(theta * M_PI / 180);
-
-            r = noise.octaveNoise0_1(x / 2, y / 2, z / 2, 8.0);
-
-            x *= 2 * r;
-            y *= r;
-            z *= r;
-
-            x -= 1.5;
-
-            AddParticle(x, y, z, r - 0.2, r - 0.2, r - 0.2).execute(facade);
-        }
-    }
-
-    noise.reseed(rand());
-
-    for (double theta = 0; theta < 360; theta += 2) {
-        for (double phi = 0; phi < 360;   phi += 2) {
-            double x, y, z, r;
-            x = sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
-            y = sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
-            z = cos(theta * M_PI / 180);
-
-            r = noise.octaveNoise0_1(x / 2, y / 2, z / 2, 8.0);
-
-            x *= 2 * r;
-            y *= r;
-            z *= r;
-
-            x += 1.5;
-
-            AddParticle(x, y, z, r + 0.2, r + 0.2, r + 0.2).execute(facade);
-        }
-    }
-
-/*
-    for (double x = -1; x <= 1; x += 0.004) {
-        for (double y = -1; y <= 1; y += 0.004) {
-            double c = noise.octaveNoise0_1(x, y, 8);
-            AddParticle(x, y, 0, c, c ,c).execute(facade);
-        }
-    }
-*/
+    //addCloud(glm::vec3(-2, -2, 0), glm::vec3(2, 1, 1), Mode::Perlin);
+    addCloud(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
 }
 
 MainWindow::~MainWindow()

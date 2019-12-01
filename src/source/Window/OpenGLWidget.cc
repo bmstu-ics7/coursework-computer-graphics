@@ -8,7 +8,6 @@ OpenGLWidget::OpenGLWidget(QWidget* parent)
 void OpenGLWidget::initializeGL()
 {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    // glEnable(GL_LIGHTING);
     glEnable(GL_NORMALIZE);
 }
 
@@ -18,7 +17,6 @@ void OpenGLWidget::resizeGL(int newWidth, int newHeight)
     _height = newHeight;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glViewport(0, 0, (GLint)_width, (GLint)_height);
 }
 
 void OpenGLWidget::paintGL()
@@ -26,6 +24,14 @@ void OpenGLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glPushMatrix();
+
+    glViewport(0, 0, (GLint)_width * 2, (GLint)_height * 2);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    glOrtho(-(GLfloat)_width / 600, (GLfloat)_width / 600,
+            -(GLfloat)_height / 600, (GLfloat)_height / 600,
+            -2, 200);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -33,20 +39,7 @@ void OpenGLWidget::paintGL()
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_TEXTURE_2D);
 
-    glOrtho(-(GLfloat)_width / 600, (GLfloat)_width / 600, -(GLfloat)_height / 600, (GLfloat)_height / 600, -2, 200);
-
-    // glShadeModel(GL_SMOOTH);
-
-    /*
-    GLfloat material_diffuse[] = {1.0, 1.0, 1.0, 1.0};
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse);
-
-    GLfloat light0_diffuse[] = {1.0, 1.0, 1.0};
-    GLfloat light0_direction[] = {1.0, 1.0, 1.0, 0.0};
-    glEnable(GL_LIGHT0);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
-    glLightfv(GL_LIGHT0, GL_POSITION, light0_direction);
-    */
+    glShadeModel(GL_SMOOTH);
 
     try {
         ObjectIterator begin = facade->getObjects().beginObjects();
@@ -61,7 +54,6 @@ void OpenGLWidget::paintGL()
     }
 
     glPopMatrix();
-    // glDisable(GL_LIGHT0);
 }
 
 void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
@@ -76,7 +68,7 @@ void OpenGLWidget::drawLine(const Point3D& a, const Point3D& b)
 void OpenGLWidget::drawParticle(const Point3D& particle, double r, double g, double b)
 {
     glMatrixMode(GL_MODELVIEW);
-    const double d = 0.03;
+    const double d = 0.05;
 
     double verges[6][4][3] =
     {
@@ -129,6 +121,9 @@ void OpenGLWidget::drawParticle(const Point3D& particle, double r, double g, dou
         }
     };
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     for (int i = 0; i < 6; ++i) {
         glBegin(GL_QUADS);
             glColor3f(r, g, b);
@@ -137,23 +132,6 @@ void OpenGLWidget::drawParticle(const Point3D& particle, double r, double g, dou
             }
         glEnd();
     }
-
-    /*
-    glPointSize(1.0f);
-    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-    glEnable(GL_POINT_SMOOTH);
-
-    glBegin(GL_POINTS);
-        glColor3f(r, g, b);
-        glVertex3f((GLfloat)particle.x(), (GLfloat)particle.y(), (GLfloat)particle.z());
-    glEnd();
-    */
-    /*
-    glPushMatrix();
-    glTranslatef(particle.x(), particle.y(), particle.z());
-    gluSphere(gluNewQuadric(), 0.02, 10, 10);
-    glPopMatrix();
-    */
 }
 
 void OpenGLWidget::setFacade(Scene* facade)
@@ -178,76 +156,27 @@ void OpenGLWidget::setCamera(GLfloat ox, GLfloat oy, GLfloat oz,
 
 void OpenGLWidget::skyBox()
 {
-    glMatrixMode(GL_MODELVIEW);
-    const double d = 100;
+    glPushMatrix();
+    glTranslatef(0.0f, -50.0f, 0.0f);
 
-    double verges[6][4][3] =
-    {
-        {
-            // Лицевая грань
-            { -d, +d, +d },
-            { +d, +d, +d },
-            { +d, -d, +d },
-            { -d, -d, +d }
-        },
+    GLdouble eq[4] = { 0.0f, 1.0f, 0.0f, 0.0f };
+    glClipPlane(GL_CLIP_PLANE0, eq);
+    glEnable(GL_CLIP_PLANE0);
 
-        {
-            // Задняя грань
-            { -d, +d, -d },
-            { +d, +d, -d },
-            { +d, -d, -d },
-            { -d, -d, -d }
-        },
+    glColor3f(0.49, 0.78, 1.0);
+    GLUquadricObj* quadric = gluNewQuadric();
+    gluQuadricDrawStyle(quadric, GLU_FILL);
+    gluQuadricNormals(quadric, GLU_SMOOTH);
+    gluSphere(quadric, 100, 18, 18);
+    glDisable(GL_CLIP_PLANE0);
 
-        {
-            // Левая грань
-            { -d, +d, +d },
-            { -d, +d, -d },
-            { -d, -d, -d },
-            { -d, -d, +d }
-        },
+    glBegin(GL_QUADS);
+        glColor3f(0.41f, 0.19f, 0.01f);
+        glVertex3f(+100, 0, -100);
+        glVertex3f(+100, 0, +100);
+        glVertex3f(-100, 0, +100);
+        glVertex3f(-100, 0, -100);
+    glEnd();
 
-        {
-            // Правая грань
-            { +d, +d, +d },
-            { +d, +d, -d },
-            { +d, -d, -d },
-            { +d, -d, +d }
-        },
-
-        {
-            // Верхняя грань
-            { -d, +d, +d },
-            { -d, +d, -d },
-            { +d, +d, -d },
-            { +d, +d, +d }
-        },
-
-        {
-            // Нижняя грань
-            { -d, -d, +d },
-            { -d, -d, -d },
-            { +d, -d, -d },
-            { +d, -d, +d }
-        }
-    };
-
-    GLfloat colors[6][3] =
-    {
-        {1.0, 0.0, 0.0},
-        {0.0, 1.0, 0.0},
-        {0.0, 0.0, 1.0},
-        {1.0, 0.0, 1.0},
-        {1.0, 1.0, 0.0},
-        {0.0, 1.0, 1.0}
-    };
-
-    for (int i = 0; i < 6; ++i) {
-        glBegin(GL_QUADS);
-            glColor3f(colors[i][0], colors[i][1], colors[i][2]);
-            for (int j = 0; j < 4; ++j) {
-                glVertex3f(verges[i][j][0], verges[i][j][1], verges[i][j][2]);
-            }
-        glEnd();
-    }
+    glPopMatrix();
 }

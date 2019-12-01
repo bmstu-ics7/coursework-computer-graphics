@@ -1,12 +1,7 @@
 #ifndef __OPENGLWIDGET_H
 #define __OPENGLWIDGET_H
 
-#ifndef __APPLE__
 #include <OpenGL/glu.h>
-#elif __linux__
-#include <GL/glu.h>
-#endif
-
 #include <QtOpenGL>
 #include <QOpenGLWidget>
 #include "Object/Point3D.h"

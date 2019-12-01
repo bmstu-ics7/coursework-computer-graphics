@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QKeyEvent>
 #include <QDebug>
+#include "glm/vec3.hpp"
 
 #include "Commands/Offset.h"
 #include "Commands/Rotate.h"
@@ -33,6 +34,8 @@ public:
     void mousePressedEvent(QMouseEvent*);
     void mouseMoveEvent(QMouseEvent*);
     void wheelEvent(QWheelEvent*);
+
+    void addCloud(glm::vec3 center, glm::vec3 coefficient);
 
 private:
     Ui::MainWindow *ui;
