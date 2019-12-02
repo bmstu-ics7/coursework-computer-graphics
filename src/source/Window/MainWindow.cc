@@ -3,11 +3,19 @@
 #include "Math/PerlinNoise.hpp"
 #include "Math/TileableVolumeNoise.h"
 
+double noise(siv::PerlinNoise n, double x, double y, double z)
+{
+    double n1 = Tileable3dNoise::WorleyNoise(glm::vec3(x, y, z), 4);
+    double n2 = Tileable3dNoise::WorleyNoise(glm::vec3(x, y, z), 8);
+    double r = 0.1 + ((1 - n1) * 1.5 -  n2 * 0.7) * 0.8 + n.octaveNoise0_1(x * 5, y * 5, z * 5, 8);
+    return r;
+}
+
 void MainWindow::addCloud(glm::vec3 center, glm::vec3 coefficient)
 {
     double x, y, z, r;
-    siv::PerlinNoise noise;
-    noise.reseed(rand());
+    siv::PerlinNoise noisePerlin;
+    noisePerlin.reseed(rand());
 
     for (double theta = 0; theta < 360; theta += 2) {
         for (double phi = 0; phi < 360;   phi += 2) {
@@ -15,7 +23,8 @@ void MainWindow::addCloud(glm::vec3 center, glm::vec3 coefficient)
             y = coefficient[1] * sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
             z = coefficient[2] * cos(theta * M_PI / 180);
 
-            r = noise.octaveNoise0_1(x / 2, y / 2, z / 2, 8);
+            r = noisePerlin.octaveNoise0_1(x / 2, y / 2, z / 2, 8) +
+                noise(noisePerlin, x / 2, y / 2, z / 2) * 0.2;
 
             x = center[0] + x * r;
             y = center[1] + y * r;
@@ -24,6 +33,14 @@ void MainWindow::addCloud(glm::vec3 center, glm::vec3 coefficient)
             AddParticle(x, y, z, r, r, r).execute(facade);
         }
     }
+    /*
+    double c;
+    for (double x = -1; x <= 1; x += 0.01)
+        for (double y = -1; y <= 1; y += 0.01) {
+            c = noise(noisePerlin, x, y, 0);
+            AddParticle(x, y, 0, c, c, c).execute(facade);
+        }
+    */
 }
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -35,8 +52,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     srand(time(NULL));
 
-    //addCloud(glm::vec3(-2, -2, 0), glm::vec3(2, 1, 1), Mode::Perlin);
-    addCloud(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
+    addCloud(glm::vec3(0, 0, 0), glm::vec3(2, 1, 1));
+    addCloud(glm::vec3(2.5, 0, 1.5), glm::vec3(2, 1, 1));
+    //addCloud(glm::vec3(0, 1.5, 0), glm::vec3(2, 1, 1));
+    //addCloud(glm::vec3(-2.5, 0, 0), glm::vec3(2, 1, 1));
+    //addCloud(glm::vec3(0, -2, 0.5), glm::vec3(2, 1, 1));
+    addCloud(glm::vec3(0, 0, 3), glm::vec3(2, 1, 1));
 }
 
 MainWindow::~MainWindow()
@@ -98,16 +119,20 @@ void MainWindow::paintEvent(QPaintEvent*)
 
 void MainWindow::mousePressedEvent(QMouseEvent* e)
 {
-    prev = Point2D(e->x(), e->y());
+    if (e->buttons() == Qt::LeftButton)
+        prev = Point2D(e->localPos().x(), e->localPos().y());
+    e->accept();
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent* e)
 {
-    int y = 180 * (e->x() - prev.x()) / width();
-    int x = 180 * (e->y() - prev.y()) / height();
+    if (e->buttons() != Qt::LeftButton) return;
+
+    int y = 180 * (e->localPos().x() - prev.x()) / width();
+    int x = 180 * (e->localPos().y() - prev.y()) / height();
 
     RotateCamera((double)x, (double)y, 0).execute(facade);
-    prev = Point2D(e->x(), e->y());
+    prev = Point2D(e->localPos().x(), e->localPos().y());
 
     repaint();
 }
