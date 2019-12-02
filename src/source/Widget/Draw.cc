@@ -6,7 +6,8 @@ Widget::Widget(QWidget* parent)
 {
     srand(time(NULL));
     addCloud(glm::vec3(0, 0, 0), glm::vec3(2, 1, 1));
-    update();
+    addCloud(glm::vec3(1, 0, 2), glm::vec3(2, 1, 1));
+    addCloud(glm::vec3(-4, 0, 1), glm::vec3(2, 1, 1));
 }
 
 void Widget::initializeGL()

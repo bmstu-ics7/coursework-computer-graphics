@@ -22,7 +22,7 @@ void Widget::addCloud(glm::vec3 center, glm::vec3 coefficient)
             z = coefficient[2] * cos(theta * M_PI / 180);
 
             r = noisePerlin.octaveNoise0_1(x / 2, y / 2, z / 2, 8) +
-                noise(noisePerlin, x / 2, y / 2, z / 2) * 0.2;
+                noise(noisePerlin, x / 2, y / 2, z / 2) * 0.3;
 
             x = center[0] + x * r;
             y = center[1] + y * r;
