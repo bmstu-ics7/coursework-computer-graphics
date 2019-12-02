@@ -13,7 +13,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 #)
 
 set(HEADERS
-    include/Widget.h
+    include/Widget/Widget.h
     include/Particle.h
     include/Noise/TileableVolumeNoise.h
     include/Noise/PerlinNoise.hpp
@@ -21,7 +21,9 @@ set(HEADERS
 
 set(SOURCES
     source/main.cc
-    source/Widget.cc
+    source/Widget/Draw.cc
+    source/Widget/Control.cc
+    source/Widget/Camera.cc
     source/Particle.cc
     source/Noise/TileableVolumeNoise.cc
 )

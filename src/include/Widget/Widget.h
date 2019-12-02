@@ -21,29 +21,30 @@ class Widget : public QOpenGLWidget
 {
     Q_OBJECT
 
-public:
-    Widget(QWidget* parent = 0);
-
-    void drawParticle(const Particle& particle);
-
-    void sky();
-    void setCamera();
-    void drawParticles();
-    void addCloud(glm::vec3 center, glm::vec3 coefficient);
-    void keyPressEvent(QKeyEvent* e);
-
-    void offsetCamera(GLdouble x, GLdouble y, GLdouble z);
-    void scaleCamera(GLdouble k);
-    void rotateCamera(GLint x, GLint y, GLint z);
-
-    void mousePressedEvent(QMouseEvent* e);
-    void mouseMoveEvent(QMouseEvent* e);
-    void wheelEvent(QWheelEvent* e);
-
 protected:
     void initializeGL();
     void resizeGL(int newWidth, int newHeight);
     void paintGL();
+
+public:
+    Widget(QWidget* parent = 0);
+
+    void sky();
+    void drawParticles();
+    void drawParticle(const Particle& particle);
+
+    GLdouble noise(siv::PerlinNoise n, double x, double y, double z);
+    void addCloud(glm::vec3 center, glm::vec3 coefficient);
+
+    void setCamera();
+    void offsetCamera(GLdouble x, GLdouble y, GLdouble z);
+    void scaleCamera(GLdouble k);
+    void rotateCamera(GLint x, GLint y, GLint z);
+
+    void keyPressEvent(QKeyEvent* e);
+    void mousePressedEvent(QMouseEvent* e);
+    void mouseMoveEvent(QMouseEvent* e);
+    void wheelEvent(QWheelEvent* e);
 
 private:
     size_t _width;
