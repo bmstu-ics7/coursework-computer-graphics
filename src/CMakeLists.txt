@@ -4,17 +4,14 @@ project(clouds)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-#set(CMAKE_AUTOUIC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-#set(CMAKE_AUTOUIC_SEARCH_PATHS
-#    "gui"
-#)
+#file(GLOB SHADERS shaders/*.glsl)
 
 set(HEADERS
     include/Widget/Widget.h
-    include/Particle.h
+    include/Objects/Particle.h
     include/Noise/TileableVolumeNoise.h
     include/Noise/PerlinNoise.hpp
 )
@@ -24,22 +21,18 @@ set(SOURCES
     source/Widget/Draw.cc
     source/Widget/Control.cc
     source/Widget/Camera.cc
-    source/Particle.cc
+    source/Objects/Particle.cc
     source/Noise/TileableVolumeNoise.cc
 )
-
-#set(GUI
-#    gui/MainWindow.ui
-#)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt5OpenGL REQUIRED)
 find_package(OpenGL)
 
 add_executable(clouds
+    ${SHADERS}
     ${HEADERS}
     ${SOURCES}
-    ${GUI}
 )
 
 target_include_directories(clouds

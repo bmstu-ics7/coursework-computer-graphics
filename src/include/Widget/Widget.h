@@ -1,19 +1,23 @@
 #ifndef __WIDGET_H
 #define __WIDGET_H
 
+#define GL_SILENCE_DEPRECATION
+
+/* OpenGL libraries */
 #include <OpenGL/glu.h>
 #include <QtOpenGL>
 #include <QOpenGLWidget>
+#include "glm/glm.hpp"
+
+/* QT libraries */
 #include <QVector3D>
-#include <QQuaternion>
 #include <QList>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QPoint>
 
-#include "glm/glm.hpp"
-#include "Particle.h"
+#include "Objects/Particle.h"
 #include "Noise/PerlinNoise.hpp"
 #include "Noise/TileableVolumeNoise.h"
 
@@ -41,10 +45,10 @@ public:
     void scaleCamera(GLdouble k);
     void rotateCamera(GLint x, GLint y, GLint z);
 
-    void keyPressEvent(QKeyEvent* e);
-    void mousePressedEvent(QMouseEvent* e);
-    void mouseMoveEvent(QMouseEvent* e);
-    void wheelEvent(QWheelEvent* e);
+    void keyPressEvent(QKeyEvent* event);
+    void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void wheelEvent(QWheelEvent* event);
 
 private:
     size_t _width;

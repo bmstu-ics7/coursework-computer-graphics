@@ -79,32 +79,33 @@ void Widget::keyPressEvent(QKeyEvent* e)
     }
 }
 
-void Widget::mousePressedEvent(QMouseEvent* e)
+void Widget::mousePressEvent(QMouseEvent* event)
 {
-    if (e->buttons() == Qt::LeftButton)
-        prev = QPoint(e->localPos().x(), e->localPos().y());
-    e->accept();
+    if (event->buttons() == Qt::LeftButton)
+        prev = QPoint(event->localPos().x(), event->localPos().y());
+    event->accept();
 }
 
-void Widget::mouseMoveEvent(QMouseEvent* e)
+void Widget::mouseMoveEvent(QMouseEvent* event)
 {
-    if (e->buttons() != Qt::LeftButton) return;
+    if (event->buttons() != Qt::LeftButton) return;
 
-    GLint y = 180 * (e->localPos().x() - prev.x()) / width();
-    GLint x = 180 * (e->localPos().y() - prev.y()) / height();
+    GLint y = 180 * (event->localPos().x() - prev.x()) / width();
+    GLint x = 180 * (event->localPos().y() - prev.y()) / height();
+
+    prev = QPoint(event->localPos().x(), event->localPos().y());
 
     rotateCamera(x, y, 0);
-    prev = QPoint(e->localPos().x(), e->localPos().y());
 
     update();
 }
 
-void Widget::wheelEvent(QWheelEvent* e)
+void Widget::wheelEvent(QWheelEvent* event)
 {
-    if (e->delta() > 0)
+    if (event->delta() > 0)
         scaleCamera(1.05);
-    else if (e->delta() < 0)
+    else if (event->delta() < 0)
         scaleCamera(0.95);
 
-    repaint();
+    update();
 }
