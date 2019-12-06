@@ -9,7 +9,7 @@ double Widget::noise(siv::PerlinNoise n, double x, double y, double z)
     return r;
 }
 
-void Widget::addCloud(glm::vec3 center, glm::vec3 coefficient)
+void Widget::addCloud(QVector3D center, QVector3D coefficient)
 {
     double x, y, z, r;
     siv::PerlinNoise noisePerlin;
@@ -28,7 +28,7 @@ void Widget::addCloud(glm::vec3 center, glm::vec3 coefficient)
             y = center[1] + y * r;
             z = center[2] + z * r;
 
-            _particles.append(Particle(x, y, z, 0.9, 0.9, 0.9));
+            _particles.append(Particle(x, y, z, r, r, r));
         }
     }
 }
@@ -37,4 +37,69 @@ Widget::Widget(QWidget* parent)
     : QOpenGLWidget(parent), _texture(0)
 {
     srand(uint(time(nullptr)));
+    _translateX = 0;
+    _translateY = 0;
+    _translateZ = -30;
+    _scale = 1;
+}
+
+void Widget::keyPressEvent(QKeyEvent* e)
+{
+    switch (e->key()) {
+    case Qt::Key_J:
+        scaleCamera(0.95);
+        update();
+        break;
+    case Qt::Key_K:
+        scaleCamera(1.05);
+        update();
+        break;
+    case Qt::Key_W:
+        translateCamera(0, 0, 0.5);
+        update();
+        break;
+    case Qt::Key_A:
+        translateCamera(0.5, 0, 0);
+        update();
+        break;
+    case Qt::Key_S:
+        translateCamera(0, 0, -0.5);
+        update();
+        break;
+    case Qt::Key_D:
+        translateCamera(-0.5, 0, 0);
+        update();
+        break;
+    }
+}
+
+void Widget::mousePressEvent(QMouseEvent* e)
+{
+    if (e->buttons() == Qt::LeftButton)
+        _prev = QVector2D(e->localPos());
+    e->accept();
+}
+
+void Widget::mouseMoveEvent(QMouseEvent* e)
+{
+    if (e->buttons() != Qt::LeftButton) return;
+
+    QVector2D diff = QVector2D(e->localPos()) - _prev;
+    _prev = QVector2D(e->localPos());
+
+    float angle = diff.length() / 2.0f;
+    QVector2D axis(diff.y(), diff.x());
+    rotateCamera(QQuaternion::fromAxisAndAngle(axis, angle));
+
+    update();
+}
+
+void Widget::wheelEvent(QWheelEvent* e)
+{
+    if (e->delta() > 0)
+        scaleCamera(1.05);
+    else if (e->delta() < 0)
+        scaleCamera(0.95);
+
+    repaint();
 }

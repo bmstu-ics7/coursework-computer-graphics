@@ -7,7 +7,7 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z)
     : Particle(x, y, z, 1.0, 1.0, 1.0) { }
 
 Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b)
-    : Particle(x, y, z, r, g, b, 0.05) { }
+    : Particle(x, y, z, r, g, b, 0.1) { }
 
 Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat width)
     : _r(r), _g(g), _b(b)
@@ -16,40 +16,40 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloa
     QVector< Vertex > vertex;
 
     // front
-    vertex.append(Vertex(QVector3D(x - w, y + w, z + w), QVector2D(0.0, 1.0), QVector3D(0.0, 0.0, 1.0)));
-    vertex.append(Vertex(QVector3D(x - w, y - w, z + w), QVector2D(0.0, 0.0), QVector3D(0.0, 0.0, 1.0)));
-    vertex.append(Vertex(QVector3D(x + w, y + w, z + w), QVector2D(1.0, 1.0), QVector3D(0.0, 0.0, 1.0)));
-    vertex.append(Vertex(QVector3D(x + w, y - w, z + w), QVector2D(1.0, 0.0), QVector3D(0.0, 0.0, 1.0)));
+    vertex.append(Vertex(QVector3D(-w, +w, +w), QVector2D(0.0, 1.0), QVector3D(0.0, 0.0, 1.0)));
+    vertex.append(Vertex(QVector3D(-w, -w, +w), QVector2D(0.0, 0.0), QVector3D(0.0, 0.0, 1.0)));
+    vertex.append(Vertex(QVector3D(+w, +w, +w), QVector2D(1.0, 1.0), QVector3D(0.0, 0.0, 1.0)));
+    vertex.append(Vertex(QVector3D(+w, -w, +w), QVector2D(1.0, 0.0), QVector3D(0.0, 0.0, 1.0)));
 
     // right
-    vertex.append(Vertex(QVector3D(x + w, y + w, z + w), QVector2D(0.0, 1.0), QVector3D(1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x + w, y - w, z + w), QVector2D(0.0, 0.0), QVector3D(1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x + w, y + w, z - w), QVector2D(1.0, 1.0), QVector3D(1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x + w, y - w, z - w), QVector2D(1.0, 0.0), QVector3D(1.0, 0.0, 0.0)));
+    vertex.append(Vertex(QVector3D(+w, +w, +w), QVector2D(0.0, 1.0), QVector3D(1.0, 0.0, 0.0)));
+    vertex.append(Vertex(QVector3D(+w, -w, +w), QVector2D(0.0, 0.0), QVector3D(1.0, 0.0, 0.0)));
+    vertex.append(Vertex(QVector3D(+w, +w, -w), QVector2D(1.0, 1.0), QVector3D(1.0, 0.0, 0.0)));
+    vertex.append(Vertex(QVector3D(+w, -w, -w), QVector2D(1.0, 0.0), QVector3D(1.0, 0.0, 0.0)));
 
     // top
-    vertex.append(Vertex(QVector3D(x + w, y + w, z + w), QVector2D(0.0, 1.0), QVector3D(0.0, 1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x + w, y + w, z - w), QVector2D(0.0, 0.0), QVector3D(0.0, 1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x - w, y + w, z + w), QVector2D(1.0, 1.0), QVector3D(0.0, 1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x - w, y + w, z - w), QVector2D(1.0, 0.0), QVector3D(0.0, 1.0, 0.0)));
+    vertex.append(Vertex(QVector3D(+w, +w, +w), QVector2D(0.0, 1.0), QVector3D(0.0, 1.0, 0.0)));
+    vertex.append(Vertex(QVector3D(+w, +w, -w), QVector2D(0.0, 0.0), QVector3D(0.0, 1.0, 0.0)));
+    vertex.append(Vertex(QVector3D(-w, +w, +w), QVector2D(1.0, 1.0), QVector3D(0.0, 1.0, 0.0)));
+    vertex.append(Vertex(QVector3D(-w, +w, -w), QVector2D(1.0, 0.0), QVector3D(0.0, 1.0, 0.0)));
 
     //back
-    vertex.append(Vertex(QVector3D(x + w, y + w, z - w), QVector2D(0.0, 1.0), QVector3D(0.0, 0.0, -1.0)));
-    vertex.append(Vertex(QVector3D(x + w, y - w, z - w), QVector2D(0.0, 0.0), QVector3D(0.0, 0.0, -1.0)));
-    vertex.append(Vertex(QVector3D(x - w, y + w, z - w), QVector2D(1.0, 1.0), QVector3D(0.0, 0.0, -1.0)));
-    vertex.append(Vertex(QVector3D(x - w, y - w, z - w), QVector2D(1.0, 0.0), QVector3D(0.0, 0.0, -1.0)));
+    vertex.append(Vertex(QVector3D(+w, +w, -w), QVector2D(0.0, 1.0), QVector3D(0.0, 0.0, -1.0)));
+    vertex.append(Vertex(QVector3D(+w, -w, -w), QVector2D(0.0, 0.0), QVector3D(0.0, 0.0, -1.0)));
+    vertex.append(Vertex(QVector3D(-w, +w, -w), QVector2D(1.0, 1.0), QVector3D(0.0, 0.0, -1.0)));
+    vertex.append(Vertex(QVector3D(-w, -w, -w), QVector2D(1.0, 0.0), QVector3D(0.0, 0.0, -1.0)));
 
     // left
-    vertex.append(Vertex(QVector3D(x - w, y + w, z + w), QVector2D(0.0, 1.0), QVector3D(-1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x - w, y + w, z - w), QVector2D(0.0, 0.0), QVector3D(-1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x - w, y - w, z + w), QVector2D(1.0, 1.0), QVector3D(-1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x - w, y - w, z - w), QVector2D(1.0, 0.0), QVector3D(-1.0, 0.0, 0.0)));
+    vertex.append(Vertex(QVector3D(-w, +w, +w), QVector2D(0.0, 1.0), QVector3D(-1.0, 0.0, 0.0)));
+    vertex.append(Vertex(QVector3D(-w, +w, -w), QVector2D(0.0, 0.0), QVector3D(-1.0, 0.0, 0.0)));
+    vertex.append(Vertex(QVector3D(-w, -w, +w), QVector2D(1.0, 1.0), QVector3D(-1.0, 0.0, 0.0)));
+    vertex.append(Vertex(QVector3D(-w, -w, -w), QVector2D(1.0, 0.0), QVector3D(-1.0, 0.0, 0.0)));
 
     // bottom
-    vertex.append(Vertex(QVector3D(x - w, y - w, z + w), QVector2D(0.0, 1.0), QVector3D(0.0, -1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x - w, y - w, z - w), QVector2D(0.0, 0.0), QVector3D(0.0, -1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x + w, y - w, z + w), QVector2D(1.0, 1.0), QVector3D(0.0, -1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(x + w, y - w, z - w), QVector2D(1.0, 0.0), QVector3D(0.0, -1.0, 0.0)));
+    vertex.append(Vertex(QVector3D(-w, -w, +w), QVector2D(0.0, 1.0), QVector3D(0.0, -1.0, 0.0)));
+    vertex.append(Vertex(QVector3D(-w, -w, -w), QVector2D(0.0, 0.0), QVector3D(0.0, -1.0, 0.0)));
+    vertex.append(Vertex(QVector3D(+w, -w, +w), QVector2D(1.0, 1.0), QVector3D(0.0, -1.0, 0.0)));
+    vertex.append(Vertex(QVector3D(+w, -w, -w), QVector2D(1.0, 0.0), QVector3D(0.0, -1.0, 0.0)));
 
     QVector< GLuint > indexes;
 
@@ -74,9 +74,7 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloa
     _indexBuffer.release();
 
     _modelViewMatrix.setToIdentity();
-    _modelViewMatrix.translate(0.0, 0.0, -10.0);
-    _modelViewMatrix.rotate(30, 1.0, 0.0, 0.0);
-    _modelViewMatrix.rotate(30, 0.0, 1.0, 0.0);
+    _modelViewMatrix.translate(x, y, z);
 }
 
 void Particle::setColor(GLfloat r, GLfloat g, GLfloat b)

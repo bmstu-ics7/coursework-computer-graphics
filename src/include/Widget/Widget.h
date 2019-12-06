@@ -20,6 +20,8 @@
 #include <QOpenGLShaderProgram>
 #include <QMatrix4x4>
 #include <QOpenGLTexture>
+#include <QQuaternion>
+#include <QVector2D>
 
 #include "Objects/Particle.h"
 #include "Noise/PerlinNoise.hpp"
@@ -40,14 +42,33 @@ public:
     Widget(QWidget* parent = nullptr);
 
     double noise(siv::PerlinNoise n, double x, double y, double z);
-    void addCloud(glm::vec3 center, glm::vec3 coefficient);
+    void addCloud(QVector3D center, QVector3D coefficient);
+
+    void setCamera();
+    void translateCamera(GLfloat x, GLfloat y, GLfloat z);
+    void scaleCamera(GLfloat k);
+    void rotateCamera(QQuaternion angle);
+
+    void keyPressEvent(QKeyEvent* e);
+    void mousePressEvent(QMouseEvent* e);
+    void mouseMoveEvent(QMouseEvent* e);
+    void wheelEvent(QWheelEvent* e);
 
 private:
     QMatrix4x4 _projectionMatrix;
+    QMatrix4x4 _camera;
+    QVector2D _prev;
+
     QOpenGLShaderProgram _program;
     QOpenGLTexture* _texture;
 
     QList< Particle > _particles;
+
+    GLfloat _scale;
+    GLfloat _translateX;
+    GLfloat _translateY;
+    GLfloat _translateZ;
+    QQuaternion _angle;
 };
 
 #endif // __WIDGET_H
