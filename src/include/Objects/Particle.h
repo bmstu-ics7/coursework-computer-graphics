@@ -2,38 +2,57 @@
 #define __PARTICLE_H
 
 #include <QtOpenGL>
+#include <QVector>
+#include <QVector2D>
+#include <QVector3D>
+#include <QOpenGLBuffer>
+#include <QMatrix4x4>
+
+struct Vertex
+{
+    Vertex();
+    Vertex(QVector3D p, QVector2D t, QVector3D n)
+        : position(p), texCoord(t), normal(n) { }
+
+    QVector3D position;
+    QVector2D texCoord;
+    QVector3D normal;
+};
 
 class Particle
 {
 public:
     Particle();
-    Particle(GLdouble x, GLdouble y, GLdouble z);
-    Particle(GLdouble x, GLdouble y, GLdouble z, GLdouble r, GLdouble g, GLdouble b);
+    Particle(GLfloat x, GLfloat y, GLfloat z);
+    Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b);
+    Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat width);
 
-    GLdouble x();
-    GLdouble y();
-    GLdouble z();
+    QOpenGLBuffer& arrayBuffer();
+    QOpenGLBuffer& indexBuffer();
+    QMatrix4x4& modelViewMatrix();
 
-    GLdouble r();
-    GLdouble g();
-    GLdouble b();
+    const QOpenGLBuffer& arrayBuffer() const;
+    const QOpenGLBuffer& indexBuffer() const;
+    const QMatrix4x4& modelViewMatrix() const;
 
-    const GLdouble x() const;
-    const GLdouble y() const;
-    const GLdouble z() const;
+    void setColor(GLfloat r, GLfloat g, GLfloat b);
 
-    const GLdouble r() const;
-    const GLdouble g() const;
-    const GLdouble b() const;
+    GLfloat r();
+    GLfloat g();
+    GLfloat b();
+
+    GLfloat r() const;
+    GLfloat g() const;
+    GLfloat b() const;
 
 private:
-    GLdouble _x;
-    GLdouble _y;
-    GLdouble _z;
+    QOpenGLBuffer _arrayBuffer;
+    QOpenGLBuffer _indexBuffer;
+    QMatrix4x4 _modelViewMatrix;
 
-    GLdouble _r;
-    GLdouble _g;
-    GLdouble _b;
+    GLfloat _r;
+    GLfloat _g;
+    GLfloat _b;
 };
 
 #endif // __PARTICLE_H

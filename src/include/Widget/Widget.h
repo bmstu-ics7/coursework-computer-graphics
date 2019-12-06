@@ -5,6 +5,7 @@
 
 /* OpenGL libraries */
 #include <OpenGL/glu.h>
+#include <GLUT/glut.h>
 #include <QtOpenGL>
 #include <QOpenGLWidget>
 #include "glm/glm.hpp"
@@ -16,6 +17,9 @@
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QPoint>
+#include <QOpenGLShaderProgram>
+#include <QMatrix4x4>
+#include <QOpenGLTexture>
 
 #include "Objects/Particle.h"
 #include "Noise/PerlinNoise.hpp"
@@ -30,45 +34,20 @@ protected:
     void resizeGL(int newWidth, int newHeight);
     void paintGL();
 
+    void initShaders();
+
 public:
-    Widget(QWidget* parent = 0);
+    Widget(QWidget* parent = nullptr);
 
-    void sky();
-    void drawParticles();
-    void drawParticle(const Particle& particle);
-
-    GLdouble noise(siv::PerlinNoise n, double x, double y, double z);
+    double noise(siv::PerlinNoise n, double x, double y, double z);
     void addCloud(glm::vec3 center, glm::vec3 coefficient);
 
-    void setCamera();
-    void offsetCamera(GLdouble x, GLdouble y, GLdouble z);
-    void scaleCamera(GLdouble k);
-    void rotateCamera(GLint x, GLint y, GLint z);
-
-    void keyPressEvent(QKeyEvent* event);
-    void mousePressEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void wheelEvent(QWheelEvent* event);
-
 private:
-    size_t _width;
-    size_t _height;
+    QMatrix4x4 _projectionMatrix;
+    QOpenGLShaderProgram _program;
+    QOpenGLTexture* _texture;
 
-    QPoint prev;
-
-    QList< Particle > particles;
-
-    GLdouble _scaleX = 1;
-    GLdouble _scaleY = 1;
-    GLdouble _scaleZ = 1;
-
-    GLdouble _offsetX = 0;
-    GLdouble _offsetY = 0;
-    GLdouble _offsetZ = 0;
-
-    GLint _rotateX = 0;
-    GLint _rotateY = 0;
-    GLint _rotateZ = 0;
+    QList< Particle > _particles;
 };
 
 #endif // __WIDGET_H

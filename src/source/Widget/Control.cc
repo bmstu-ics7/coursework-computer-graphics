@@ -28,84 +28,13 @@ void Widget::addCloud(glm::vec3 center, glm::vec3 coefficient)
             y = center[1] + y * r;
             z = center[2] + z * r;
 
-            particles.append(Particle(x, y, z, r, r, r));
+            _particles.append(Particle(x, y, z, 0.9, 0.9, 0.9));
         }
     }
 }
 
-void Widget::keyPressEvent(QKeyEvent* e)
+Widget::Widget(QWidget* parent)
+    : QOpenGLWidget(parent), _texture(0)
 {
-    switch (e->key()) {
-    case Qt::Key_Up:
-        rotateCamera(-2, 0, 0);
-        update();
-        break;
-    case Qt::Key_Down:
-        rotateCamera(2, 0, 0);
-        update();
-        break;
-    case Qt::Key_Left:
-        rotateCamera(0, -2, 0);
-        update();
-        break;
-    case Qt::Key_Right:
-        rotateCamera(0, 2, 0);
-        update();
-        break;
-    case Qt::Key_J:
-        scaleCamera(0.95);
-        update();
-        break;
-    case Qt::Key_K:
-        scaleCamera(1.05);
-        update();
-        break;
-    case Qt::Key_W:
-        offsetCamera(0, 0.1, 0);
-        update();
-        break;
-    case Qt::Key_A:
-        offsetCamera(-0.1, 0, 0);
-        update();
-        break;
-    case Qt::Key_S:
-        offsetCamera(0, -0.1, 0);
-        update();
-        break;
-    case Qt::Key_D:
-        offsetCamera(0.1, 0, 0);
-        update();
-        break;
-    }
-}
-
-void Widget::mousePressEvent(QMouseEvent* event)
-{
-    if (event->buttons() == Qt::LeftButton)
-        prev = QPoint(event->localPos().x(), event->localPos().y());
-    event->accept();
-}
-
-void Widget::mouseMoveEvent(QMouseEvent* event)
-{
-    if (event->buttons() != Qt::LeftButton) return;
-
-    GLint y = 180 * (event->localPos().x() - prev.x()) / width();
-    GLint x = 180 * (event->localPos().y() - prev.y()) / height();
-
-    prev = QPoint(event->localPos().x(), event->localPos().y());
-
-    rotateCamera(x, y, 0);
-
-    update();
-}
-
-void Widget::wheelEvent(QWheelEvent* event)
-{
-    if (event->delta() > 0)
-        scaleCamera(1.05);
-    else if (event->delta() < 0)
-        scaleCamera(0.95);
-
-    update();
+    srand(uint(time(nullptr)));
 }
