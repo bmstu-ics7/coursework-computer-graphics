@@ -4,7 +4,7 @@
 void Widget::setCamera()
 {
     _camera.setToIdentity();
-    _camera.scale(_scale);
+    //_camera.scale(_scale, _scale, _scale);
     _camera.rotate(_angle);
     _camera.translate(_translateX, _translateY, _translateZ);
 }

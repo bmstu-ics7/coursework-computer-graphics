@@ -13,43 +13,43 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloa
     : _r(r), _g(g), _b(b)
 {
     GLfloat w = width / 2.0f;
-    QVector< Vertex > vertex;
+    QVector< VertexOnly > vertex;
 
     // front
-    vertex.append(Vertex(QVector3D(-w, +w, +w), QVector2D(0.0, 1.0), QVector3D(0.0, 0.0, 1.0)));
-    vertex.append(Vertex(QVector3D(-w, -w, +w), QVector2D(0.0, 0.0), QVector3D(0.0, 0.0, 1.0)));
-    vertex.append(Vertex(QVector3D(+w, +w, +w), QVector2D(1.0, 1.0), QVector3D(0.0, 0.0, 1.0)));
-    vertex.append(Vertex(QVector3D(+w, -w, +w), QVector2D(1.0, 0.0), QVector3D(0.0, 0.0, 1.0)));
+    vertex.append(VertexOnly(QVector3D(-w, +w, +w)));
+    vertex.append(VertexOnly(QVector3D(-w, -w, +w)));
+    vertex.append(VertexOnly(QVector3D(+w, +w, +w)));
+    vertex.append(VertexOnly(QVector3D(+w, -w, +w)));
 
     // right
-    vertex.append(Vertex(QVector3D(+w, +w, +w), QVector2D(0.0, 1.0), QVector3D(1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(+w, -w, +w), QVector2D(0.0, 0.0), QVector3D(1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(+w, +w, -w), QVector2D(1.0, 1.0), QVector3D(1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(+w, -w, -w), QVector2D(1.0, 0.0), QVector3D(1.0, 0.0, 0.0)));
+    vertex.append(VertexOnly(QVector3D(+w, +w, +w)));
+    vertex.append(VertexOnly(QVector3D(+w, -w, +w)));
+    vertex.append(VertexOnly(QVector3D(+w, +w, -w)));
+    vertex.append(VertexOnly(QVector3D(+w, -w, -w)));
 
     // top
-    vertex.append(Vertex(QVector3D(+w, +w, +w), QVector2D(0.0, 1.0), QVector3D(0.0, 1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(+w, +w, -w), QVector2D(0.0, 0.0), QVector3D(0.0, 1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(-w, +w, +w), QVector2D(1.0, 1.0), QVector3D(0.0, 1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(-w, +w, -w), QVector2D(1.0, 0.0), QVector3D(0.0, 1.0, 0.0)));
+    vertex.append(VertexOnly(QVector3D(+w, +w, +w)));
+    vertex.append(VertexOnly(QVector3D(+w, +w, -w)));
+    vertex.append(VertexOnly(QVector3D(-w, +w, +w)));
+    vertex.append(VertexOnly(QVector3D(-w, +w, -w)));
 
     //back
-    vertex.append(Vertex(QVector3D(+w, +w, -w), QVector2D(0.0, 1.0), QVector3D(0.0, 0.0, -1.0)));
-    vertex.append(Vertex(QVector3D(+w, -w, -w), QVector2D(0.0, 0.0), QVector3D(0.0, 0.0, -1.0)));
-    vertex.append(Vertex(QVector3D(-w, +w, -w), QVector2D(1.0, 1.0), QVector3D(0.0, 0.0, -1.0)));
-    vertex.append(Vertex(QVector3D(-w, -w, -w), QVector2D(1.0, 0.0), QVector3D(0.0, 0.0, -1.0)));
+    vertex.append(VertexOnly(QVector3D(+w, +w, -w)));
+    vertex.append(VertexOnly(QVector3D(+w, -w, -w)));
+    vertex.append(VertexOnly(QVector3D(-w, +w, -w)));
+    vertex.append(VertexOnly(QVector3D(-w, -w, -w)));
 
     // left
-    vertex.append(Vertex(QVector3D(-w, +w, +w), QVector2D(0.0, 1.0), QVector3D(-1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(-w, +w, -w), QVector2D(0.0, 0.0), QVector3D(-1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(-w, -w, +w), QVector2D(1.0, 1.0), QVector3D(-1.0, 0.0, 0.0)));
-    vertex.append(Vertex(QVector3D(-w, -w, -w), QVector2D(1.0, 0.0), QVector3D(-1.0, 0.0, 0.0)));
+    vertex.append(VertexOnly(QVector3D(-w, +w, +w)));
+    vertex.append(VertexOnly(QVector3D(-w, +w, -w)));
+    vertex.append(VertexOnly(QVector3D(-w, -w, +w)));
+    vertex.append(VertexOnly(QVector3D(-w, -w, -w)));
 
     // bottom
-    vertex.append(Vertex(QVector3D(-w, -w, +w), QVector2D(0.0, 1.0), QVector3D(0.0, -1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(-w, -w, -w), QVector2D(0.0, 0.0), QVector3D(0.0, -1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(+w, -w, +w), QVector2D(1.0, 1.0), QVector3D(0.0, -1.0, 0.0)));
-    vertex.append(Vertex(QVector3D(+w, -w, -w), QVector2D(1.0, 0.0), QVector3D(0.0, -1.0, 0.0)));
+    vertex.append(VertexOnly(QVector3D(-w, -w, +w)));
+    vertex.append(VertexOnly(QVector3D(-w, -w, -w)));
+    vertex.append(VertexOnly(QVector3D(+w, -w, +w)));
+    vertex.append(VertexOnly(QVector3D(+w, -w, -w)));
 
     QVector< GLuint > indexes;
 
@@ -64,7 +64,7 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloa
 
     _arrayBuffer.create();
     _arrayBuffer.bind();
-    _arrayBuffer.allocate(vertex.constData(), vertex.size() * sizeof(Vertex));
+    _arrayBuffer.allocate(vertex.constData(), vertex.size() * sizeof(VertexOnly));
     _arrayBuffer.release();
 
     _indexBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);

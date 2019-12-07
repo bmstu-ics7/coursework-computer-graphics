@@ -8,15 +8,13 @@
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
 
-struct Vertex
+struct VertexOnly
 {
-    Vertex();
-    Vertex(QVector3D p, QVector2D t, QVector3D n)
-        : position(p), texCoord(t), normal(n) { }
+    VertexOnly();
+    VertexOnly(QVector3D p)
+        : position(p) { }
 
     QVector3D position;
-    QVector2D texCoord;
-    QVector3D normal;
 };
 
 class Particle

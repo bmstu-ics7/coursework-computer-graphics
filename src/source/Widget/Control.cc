@@ -34,12 +34,12 @@ void Widget::addCloud(QVector3D center, QVector3D coefficient)
 }
 
 Widget::Widget(QWidget* parent)
-    : QOpenGLWidget(parent), _texture(0)
+    : QOpenGLWidget(parent)
 {
     srand(uint(time(nullptr)));
     _translateX = 0;
     _translateY = 0;
-    _translateZ = -30;
+    _translateZ = -10;
     _scale = 1;
 }
 

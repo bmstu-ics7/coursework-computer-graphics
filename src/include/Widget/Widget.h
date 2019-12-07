@@ -24,6 +24,7 @@
 #include <QVector2D>
 
 #include "Objects/Particle.h"
+#include "Objects/SkyBox.h"
 #include "Noise/PerlinNoise.hpp"
 #include "Noise/TileableVolumeNoise.h"
 
@@ -60,9 +61,11 @@ private:
     QVector2D _prev;
 
     QOpenGLShaderProgram _program;
-    QOpenGLTexture* _texture;
+    QOpenGLShaderProgram _programSkyBox;
+    QOpenGLTexture* _textureSkyBox;
 
     QList< Particle > _particles;
+    SkyBox skyBox;
 
     GLfloat _scale;
     GLfloat _translateX;
