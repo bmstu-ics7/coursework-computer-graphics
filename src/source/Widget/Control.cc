@@ -9,7 +9,7 @@ double Widget::noise(siv::PerlinNoise n, double x, double y, double z)
     return r;
 }
 
-void Widget::addCloud(glm::vec3 center, glm::vec3 coefficient)
+void Widget::addCloud(QVector3D center, QVector3D coefficient)
 {
     double x, y, z, r;
     siv::PerlinNoise noisePerlin;
@@ -28,30 +28,24 @@ void Widget::addCloud(glm::vec3 center, glm::vec3 coefficient)
             y = center[1] + y * r;
             z = center[2] + z * r;
 
-            particles.append(Particle(x, y, z, r, r, r));
+            _particles.append(Particle(x, y, z, r, r, r));
         }
     }
+}
+
+Widget::Widget(QWidget* parent)
+    : QOpenGLWidget(parent)
+{
+    srand(uint(time(nullptr)));
+    _translateX = 0;
+    _translateY = 0;
+    _translateZ = -10;
+    _scale = 1;
 }
 
 void Widget::keyPressEvent(QKeyEvent* e)
 {
     switch (e->key()) {
-    case Qt::Key_Up:
-        rotateCamera(-2, 0, 0);
-        update();
-        break;
-    case Qt::Key_Down:
-        rotateCamera(2, 0, 0);
-        update();
-        break;
-    case Qt::Key_Left:
-        rotateCamera(0, -2, 0);
-        update();
-        break;
-    case Qt::Key_Right:
-        rotateCamera(0, 2, 0);
-        update();
-        break;
     case Qt::Key_J:
         scaleCamera(0.95);
         update();
@@ -61,28 +55,28 @@ void Widget::keyPressEvent(QKeyEvent* e)
         update();
         break;
     case Qt::Key_W:
-        offsetCamera(0, 0.1, 0);
+        translateCamera(0, 0, 0.5);
         update();
         break;
     case Qt::Key_A:
-        offsetCamera(-0.1, 0, 0);
+        translateCamera(0.5, 0, 0);
         update();
         break;
     case Qt::Key_S:
-        offsetCamera(0, -0.1, 0);
+        translateCamera(0, 0, -0.5);
         update();
         break;
     case Qt::Key_D:
-        offsetCamera(0.1, 0, 0);
+        translateCamera(-0.5, 0, 0);
         update();
         break;
     }
 }
 
-void Widget::mousePressedEvent(QMouseEvent* e)
+void Widget::mousePressEvent(QMouseEvent* e)
 {
     if (e->buttons() == Qt::LeftButton)
-        prev = QPoint(e->localPos().x(), e->localPos().y());
+        _prev = QVector2D(e->localPos());
     e->accept();
 }
 
@@ -90,11 +84,12 @@ void Widget::mouseMoveEvent(QMouseEvent* e)
 {
     if (e->buttons() != Qt::LeftButton) return;
 
-    GLint y = 180 * (e->localPos().x() - prev.x()) / width();
-    GLint x = 180 * (e->localPos().y() - prev.y()) / height();
+    QVector2D diff = QVector2D(e->localPos()) - _prev;
+    _prev = QVector2D(e->localPos());
 
-    rotateCamera(x, y, 0);
-    prev = QPoint(e->localPos().x(), e->localPos().y());
+    float angle = diff.length() / 2.0f;
+    QVector2D axis(diff.y(), diff.x());
+    rotateCamera(QQuaternion::fromAxisAndAngle(axis, angle));
 
     update();
 }

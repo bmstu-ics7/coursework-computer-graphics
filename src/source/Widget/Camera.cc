@@ -3,35 +3,25 @@
 
 void Widget::setCamera()
 {
-    glTranslatef(_offsetX, _offsetY, _offsetZ);
-    glScalef(_scaleX, _scaleY, _scaleZ);
-    glRotatef(_rotateX, 1.0f, 0.0f, 0.0f);
-    glRotatef(_rotateY, 0.0f, 1.0f, 0.0f);
-    glRotatef(_rotateZ, 0.0f, 0.0f, 1.0f);
+    _camera.setToIdentity();
+    //_camera.scale(_scale, _scale, _scale);
+    _camera.rotate(_angle);
+    _camera.translate(_translateX, _translateY, _translateZ);
 }
 
-void Widget::offsetCamera(GLdouble x, GLdouble y, GLdouble z)
+void Widget::translateCamera(GLfloat x, GLfloat y, GLfloat z)
 {
-    _offsetX += x;
-    _offsetY += y;
-    _offsetZ += z;
+    _translateX += x;
+    _translateY += y;
+    _translateZ += z;
 }
 
-void Widget::scaleCamera(GLdouble k)
+void Widget::scaleCamera(GLfloat k)
 {
-    _scaleX *= k;
-    _scaleY *= k;
-    _scaleZ *= k;
+    _scale *= k;
 }
 
-void Widget::rotateCamera(GLint x, GLint y, GLint z)
+void Widget::rotateCamera(QQuaternion angle)
 {
-    _rotateX += x;
-    _rotateX %= 360;
-
-    _rotateY += y;
-    _rotateY %= 360;
-
-    _rotateZ += z;
-    _rotateZ %= 360;
+    _angle *= angle;
 }

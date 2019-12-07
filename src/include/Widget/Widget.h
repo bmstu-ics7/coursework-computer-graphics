@@ -1,19 +1,30 @@
 #ifndef __WIDGET_H
 #define __WIDGET_H
 
+#define GL_SILENCE_DEPRECATION
+
+/* OpenGL libraries */
 #include <OpenGL/glu.h>
+#include <GLUT/glut.h>
 #include <QtOpenGL>
 #include <QOpenGLWidget>
+#include "glm/glm.hpp"
+
+/* QT libraries */
 #include <QVector3D>
-#include <QQuaternion>
 #include <QList>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QPoint>
+#include <QOpenGLShaderProgram>
+#include <QMatrix4x4>
+#include <QOpenGLTexture>
+#include <QQuaternion>
+#include <QVector2D>
 
-#include "glm/glm.hpp"
-#include "Particle.h"
+#include "Objects/Particle.h"
+#include "Objects/SkyBox.h"
 #include "Noise/PerlinNoise.hpp"
 #include "Noise/TileableVolumeNoise.h"
 
@@ -26,45 +37,41 @@ protected:
     void resizeGL(int newWidth, int newHeight);
     void paintGL();
 
+    void initShaders();
+
 public:
-    Widget(QWidget* parent = 0);
+    Widget(QWidget* parent = nullptr);
 
-    void sky();
-    void drawParticles();
-    void drawParticle(const Particle& particle);
-
-    GLdouble noise(siv::PerlinNoise n, double x, double y, double z);
-    void addCloud(glm::vec3 center, glm::vec3 coefficient);
+    double noise(siv::PerlinNoise n, double x, double y, double z);
+    void addCloud(QVector3D center, QVector3D coefficient);
 
     void setCamera();
-    void offsetCamera(GLdouble x, GLdouble y, GLdouble z);
-    void scaleCamera(GLdouble k);
-    void rotateCamera(GLint x, GLint y, GLint z);
+    void translateCamera(GLfloat x, GLfloat y, GLfloat z);
+    void scaleCamera(GLfloat k);
+    void rotateCamera(QQuaternion angle);
 
     void keyPressEvent(QKeyEvent* e);
-    void mousePressedEvent(QMouseEvent* e);
+    void mousePressEvent(QMouseEvent* e);
     void mouseMoveEvent(QMouseEvent* e);
     void wheelEvent(QWheelEvent* e);
 
 private:
-    size_t _width;
-    size_t _height;
+    QMatrix4x4 _projectionMatrix;
+    QMatrix4x4 _camera;
+    QVector2D _prev;
 
-    QPoint prev;
+    QOpenGLShaderProgram _program;
+    QOpenGLShaderProgram _programSkyBox;
+    QOpenGLTexture* _textureSkyBox;
 
-    QList< Particle > particles;
+    QList< Particle > _particles;
+    SkyBox skyBox;
 
-    GLdouble _scaleX = 1;
-    GLdouble _scaleY = 1;
-    GLdouble _scaleZ = 1;
-
-    GLdouble _offsetX = 0;
-    GLdouble _offsetY = 0;
-    GLdouble _offsetZ = 0;
-
-    GLint _rotateX = 0;
-    GLint _rotateY = 0;
-    GLint _rotateZ = 0;
+    GLfloat _scale;
+    GLfloat _translateX;
+    GLfloat _translateY;
+    GLfloat _translateZ;
+    QQuaternion _angle;
 };
 
 #endif // __WIDGET_H
