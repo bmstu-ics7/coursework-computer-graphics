@@ -28,7 +28,7 @@ void Widget::addCloud(QVector3D center, QVector3D coefficient)
             y = center[1] + y * r;
             z = center[2] + z * r;
 
-            _particles.append(Particle(x, y, z, r, r, r));
+            _particles.append(Particle(x, y, z, 1.0f, 1.0f, 1.0f));
         }
     }
 }
