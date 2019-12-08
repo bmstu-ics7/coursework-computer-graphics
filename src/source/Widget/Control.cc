@@ -46,14 +46,6 @@ Widget::Widget(QWidget* parent)
 void Widget::keyPressEvent(QKeyEvent* e)
 {
     switch (e->key()) {
-    case Qt::Key_J:
-        scaleCamera(0.95);
-        update();
-        break;
-    case Qt::Key_K:
-        scaleCamera(1.05);
-        update();
-        break;
     case Qt::Key_W:
         translateCamera(0, 0, 0.5);
         update();
@@ -97,9 +89,9 @@ void Widget::mouseMoveEvent(QMouseEvent* e)
 void Widget::wheelEvent(QWheelEvent* e)
 {
     if (e->delta() > 0)
-        scaleCamera(1.05);
+        translateCamera(0, 0, -0.5);
     else if (e->delta() < 0)
-        scaleCamera(0.95);
+        translateCamera(0, 0, 0.5);
 
     repaint();
 }

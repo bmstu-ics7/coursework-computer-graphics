@@ -1,4 +1,5 @@
 #include "Widget/Widget.h"
+#include <QOpenGLContext>
 #include <QDebug>
 
 void Widget::initializeGL()
@@ -53,24 +54,12 @@ void Widget::paintGL()
 
     setCamera();
 
+    _program.bind();
+    _program.setUniformValue("u_projectionMatrix", _projectionMatrix);
+    _program.setUniformValue("u_viewMatrix", _camera);
+
     for (Particle& particle : _particles) {
-        _program.bind();
-        _program.setUniformValue("u_projectionMatrix", _projectionMatrix);
-        _program.setUniformValue("u_viewMatrix", _camera);
-        _program.setUniformValue("u_modelMatrix", particle.modelViewMatrix());
-        _program.setUniformValue("u_color", QVector4D(particle.r(), particle.g(), particle.b(), 1.0f));
-
-        particle.arrayBuffer().bind();
-
-        int offset = 0;
-
-        int posLoc = _program.attributeLocation("a_position");
-        _program.enableAttributeArray(posLoc);
-        _program.setAttributeBuffer(posLoc, GL_FLOAT, offset, 3, sizeof(VertexOnly));
-
-        particle.indexBuffer().bind();
-
-        glDrawElements(GL_TRIANGLES, particle.indexBuffer().size(), GL_UNSIGNED_INT, 0);
+        particle.draw(&_program, context()->functions());
     }
 
     _textureSkyBox->bind(0);

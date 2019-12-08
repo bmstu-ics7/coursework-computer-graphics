@@ -47,7 +47,6 @@ public:
 
     void setCamera();
     void translateCamera(GLfloat x, GLfloat y, GLfloat z);
-    void scaleCamera(GLfloat k);
     void rotateCamera(QQuaternion angle);
 
     void keyPressEvent(QKeyEvent* e);

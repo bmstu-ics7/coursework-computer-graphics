@@ -7,6 +7,8 @@
 #include <QVector3D>
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
+#include <QOpenGLShaderProgram>
+#include <QOpenGLFunctions>
 
 struct VertexOnly
 {
@@ -25,23 +27,8 @@ public:
     Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b);
     Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat width);
 
-    QOpenGLBuffer& arrayBuffer();
-    QOpenGLBuffer& indexBuffer();
-    QMatrix4x4& modelViewMatrix();
-
-    const QOpenGLBuffer& arrayBuffer() const;
-    const QOpenGLBuffer& indexBuffer() const;
-    const QMatrix4x4& modelViewMatrix() const;
-
+    void draw(QOpenGLShaderProgram* program, QOpenGLFunctions* functions);
     void setColor(GLfloat r, GLfloat g, GLfloat b);
-
-    GLfloat r();
-    GLfloat g();
-    GLfloat b();
-
-    GLfloat r() const;
-    GLfloat g() const;
-    GLfloat b() const;
 
 private:
     QOpenGLBuffer _arrayBuffer;
