@@ -22,6 +22,7 @@
 #include <QOpenGLTexture>
 #include <QQuaternion>
 #include <QVector2D>
+#include <QOpenGLFramebufferObject>
 
 #include "Objects/Particle.h"
 #include "Objects/SkyBox.h"
@@ -61,7 +62,6 @@ private:
 
     QOpenGLShaderProgram _program;
     QOpenGLShaderProgram _programSkyBox;
-    QOpenGLTexture* _textureSkyBox;
 
     QList< Particle > _particles;
     SkyBox skyBox;
@@ -71,6 +71,10 @@ private:
     GLfloat _translateY;
     GLfloat _translateZ;
     QQuaternion _angle;
+
+    QOpenGLFramebufferObject* _depthBuffer;
+    size_t _fbWidth;
+    size_t _fbHeight;
 };
 
 #endif // __WIDGET_H

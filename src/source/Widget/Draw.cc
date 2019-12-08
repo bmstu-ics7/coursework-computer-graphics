@@ -4,18 +4,19 @@
 
 void Widget::initializeGL()
 {
-    _textureSkyBox = new QOpenGLTexture(QImage("../textures/skybox_texture.jpg").mirrored());
-    _textureSkyBox->setMagnificationFilter(QOpenGLTexture::Nearest);
-    _textureSkyBox->setMagnificationFilter(QOpenGLTexture::Linear);
-    _textureSkyBox->setWrapMode(QOpenGLTexture::Repeat);
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
+    _depthBuffer = new QOpenGLFramebufferObject(_fbWidth, _fbHeight, QOpenGLFramebufferObject::Depth);
+
     skyBox = SkyBox(0, 0, 0, 500);
+    skyBox.setTexture("../textures/skybox_texture.jpg");
+
     addCloud(QVector3D(0, 0, 0), QVector3D(2, 1, 1));
+
     initShaders();
 }
 
@@ -62,29 +63,8 @@ void Widget::paintGL()
         particle.draw(&_program, context()->functions());
     }
 
-    _textureSkyBox->bind(0);
-
     _programSkyBox.bind();
     _programSkyBox.setUniformValue("u_projectionMatrix", _projectionMatrix);
     _programSkyBox.setUniformValue("u_viewMatrix", _camera);
-    _programSkyBox.setUniformValue("u_modelMatrix", skyBox.modelViewMatrix());
-    _programSkyBox.setUniformValue("u_texture", 0);
-
-    skyBox.arrayBuffer().bind();
-
-    int offset = 0;
-
-    int posLoc = _programSkyBox.attributeLocation("a_position");
-    _programSkyBox.enableAttributeArray(posLoc);
-    _programSkyBox.setAttributeBuffer(posLoc, GL_FLOAT, offset, 3, sizeof(VertexTex));
-
-    offset += sizeof(QVector3D);
-
-    int texLoc = _programSkyBox.attributeLocation("a_texcoord");
-    _programSkyBox.enableAttributeArray(texLoc);
-    _programSkyBox.setAttributeBuffer(texLoc, GL_FLOAT, offset, 2, sizeof(VertexTex));
-
-    skyBox.indexBuffer().bind();
-
-    glDrawElements(GL_TRIANGLES, skyBox.indexBuffer().size(), GL_UNSIGNED_INT, 0);
+    skyBox.draw(&_programSkyBox, context()->functions());
 }

@@ -7,6 +7,8 @@
 #include <QVector3D>
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
+#include <QOpenGLFunctions>
+#include <QOpenGLTexture>
 
 struct VertexTex
 {
@@ -24,18 +26,14 @@ public:
     SkyBox();
     SkyBox(GLfloat x, GLfloat y, GLfloat z, GLfloat width);
 
-    QOpenGLBuffer& arrayBuffer();
-    QOpenGLBuffer& indexBuffer();
-    QMatrix4x4& modelViewMatrix();
-
-    const QOpenGLBuffer& arrayBuffer() const;
-    const QOpenGLBuffer& indexBuffer() const;
-    const QMatrix4x4& modelViewMatrix() const;
+    void setTexture(QString path);
+    void draw(QOpenGLShaderProgram* program, QOpenGLFunctions* functions);
 
 private:
     QOpenGLBuffer _arrayBuffer;
     QOpenGLBuffer _indexBuffer;
     QMatrix4x4 _modelViewMatrix;
+    QOpenGLTexture* _texture;
 };
 
 #endif // __SKYBOX_H

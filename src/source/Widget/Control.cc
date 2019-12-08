@@ -41,6 +41,9 @@ Widget::Widget(QWidget* parent)
     _translateY = 0;
     _translateZ = -10;
     _scale = 1;
+
+    _fbHeight = 1024;
+    _fbWidth = 1024;
 }
 
 void Widget::keyPressEvent(QKeyEvent* e)
