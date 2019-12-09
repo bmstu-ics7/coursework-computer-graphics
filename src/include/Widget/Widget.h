@@ -22,6 +22,7 @@
 #include <QOpenGLTexture>
 #include <QQuaternion>
 #include <QVector2D>
+#include <QOpenGLFramebufferObject>
 
 #include "Objects/Particle.h"
 #include "Objects/SkyBox.h"
@@ -47,7 +48,6 @@ public:
 
     void setCamera();
     void translateCamera(GLfloat x, GLfloat y, GLfloat z);
-    void scaleCamera(GLfloat k);
     void rotateCamera(QQuaternion angle);
 
     void keyPressEvent(QKeyEvent* e);
@@ -57,12 +57,15 @@ public:
 
 private:
     QMatrix4x4 _projectionMatrix;
+    QMatrix4x4 _projectionLightMatrix;
     QMatrix4x4 _camera;
+    QMatrix4x4 _lightMatrix;
+    QMatrix4x4 _shadowLightMatrix;
     QVector2D _prev;
 
     QOpenGLShaderProgram _program;
     QOpenGLShaderProgram _programSkyBox;
-    QOpenGLTexture* _textureSkyBox;
+    QOpenGLShaderProgram _programDepth;
 
     QList< Particle > _particles;
     SkyBox skyBox;
@@ -72,6 +75,14 @@ private:
     GLfloat _translateY;
     GLfloat _translateZ;
     QQuaternion _angle;
+
+    GLfloat _lightRotateX;
+    GLfloat _lightRotateY;
+    GLfloat _lightRotateZ;
+
+    QOpenGLFramebufferObject* _depthBuffer;
+    size_t _fbWidth;
+    size_t _fbHeight;
 };
 
 #endif // __WIDGET_H

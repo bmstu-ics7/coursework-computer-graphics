@@ -77,25 +77,20 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloa
     _modelViewMatrix.translate(x, y, z);
 }
 
-void Particle::setColor(GLfloat r, GLfloat g, GLfloat b)
+void Particle::draw(QOpenGLShaderProgram* program, QOpenGLFunctions* functions)
 {
-    _r = r;
-    _g = g;
-    _b = b;
+    program->setUniformValue("u_modelMatrix", _modelViewMatrix);
+    program->setUniformValue("u_color", QVector4D(_r, _g, _b, 1.0f));
+
+    _arrayBuffer.bind();
+
+    int offset = 0;
+
+    int posLoc = program->attributeLocation("a_position");
+    program->enableAttributeArray(posLoc);
+    program->setAttributeBuffer(posLoc, GL_FLOAT, offset, 3, sizeof(VertexOnly));
+
+    _indexBuffer.bind();
+
+    functions->glDrawElements(GL_TRIANGLES, _indexBuffer.size(), GL_UNSIGNED_INT, 0);
 }
-
-QOpenGLBuffer& Particle::arrayBuffer() { return _arrayBuffer; }
-QOpenGLBuffer& Particle::indexBuffer() { return _indexBuffer; }
-QMatrix4x4& Particle::modelViewMatrix() { return _modelViewMatrix; }
-
-const QOpenGLBuffer& Particle::arrayBuffer() const { return _arrayBuffer; }
-const QOpenGLBuffer& Particle::indexBuffer() const { return _indexBuffer; }
-const QMatrix4x4& Particle::modelViewMatrix() const { return _modelViewMatrix; }
-
-GLfloat Particle::r() { return _r; }
-GLfloat Particle::g() { return _g; }
-GLfloat Particle::b() { return _b; }
-
-GLfloat Particle::r() const { return _r; }
-GLfloat Particle::g() const { return _g; }
-GLfloat Particle::b() const { return _b; }

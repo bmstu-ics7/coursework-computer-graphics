@@ -28,7 +28,7 @@ void Widget::addCloud(QVector3D center, QVector3D coefficient)
             y = center[1] + y * r;
             z = center[2] + z * r;
 
-            _particles.append(Particle(x, y, z, r, r, r));
+            _particles.append(Particle(x, y, z, 1.0f, 1.0f, 1.0f));
         }
     }
 }
@@ -41,17 +41,28 @@ Widget::Widget(QWidget* parent)
     _translateY = 0;
     _translateZ = -10;
     _scale = 1;
+
+    _fbHeight = 1024;
+    _fbWidth = 1024;
 }
 
 void Widget::keyPressEvent(QKeyEvent* e)
 {
     switch (e->key()) {
-    case Qt::Key_J:
-        scaleCamera(0.95);
+    case Qt::Key_Up:
+        _lightRotateX += 10;
         update();
         break;
-    case Qt::Key_K:
-        scaleCamera(1.05);
+    case Qt::Key_Down:
+        _lightRotateX -= 10;
+        update();
+        break;
+    case Qt::Key_Left:
+        _lightRotateZ -= 10;
+        update();
+        break;
+    case Qt::Key_Right:
+        _lightRotateZ += 10;
         update();
         break;
     case Qt::Key_W:
@@ -97,9 +108,9 @@ void Widget::mouseMoveEvent(QMouseEvent* e)
 void Widget::wheelEvent(QWheelEvent* e)
 {
     if (e->delta() > 0)
-        scaleCamera(1.05);
+        translateCamera(0, 0, -0.5);
     else if (e->delta() < 0)
-        scaleCamera(0.95);
+        translateCamera(0, 0, 0.5);
 
     repaint();
 }
