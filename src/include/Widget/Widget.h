@@ -78,6 +78,7 @@ private:
 
     GLfloat _lightRotateX;
     GLfloat _lightRotateY;
+    GLfloat _lightRotateZ;
 
     QOpenGLFramebufferObject* _depthBuffer;
     size_t _fbWidth;

@@ -10,14 +10,6 @@ void Widget::initializeGL()
     _lightRotateX = 40;
     _lightRotateY = 40;
 
-    _shadowLightMatrix.setToIdentity();
-    _shadowLightMatrix.rotate(_lightRotateX, 1.0, 0.0, 0.0);
-    _shadowLightMatrix.rotate(_lightRotateY, 0.0, 1.0, 0.0);
-
-    _lightMatrix.setToIdentity();
-    _lightMatrix.rotate(-_lightRotateY, 0.0, 1.0, 0.0);
-    _lightMatrix.rotate(-_lightRotateX, 1.0, 0.0, 0.0);
-
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
     glEnable(GL_DEPTH_TEST);

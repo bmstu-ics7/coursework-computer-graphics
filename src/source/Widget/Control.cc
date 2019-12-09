@@ -49,6 +49,22 @@ Widget::Widget(QWidget* parent)
 void Widget::keyPressEvent(QKeyEvent* e)
 {
     switch (e->key()) {
+    case Qt::Key_Up:
+        _lightRotateX += 10;
+        update();
+        break;
+    case Qt::Key_Down:
+        _lightRotateX -= 10;
+        update();
+        break;
+    case Qt::Key_Left:
+        _lightRotateZ -= 10;
+        update();
+        break;
+    case Qt::Key_Right:
+        _lightRotateZ += 10;
+        update();
+        break;
     case Qt::Key_W:
         translateCamera(0, 0, 0.5);
         update();
