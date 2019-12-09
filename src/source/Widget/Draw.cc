@@ -20,6 +20,8 @@ void Widget::initializeGL()
     skyBox = SkyBox(0, 0, 0, 500);
     skyBox.setTexture("../textures/skybox_texture.jpg");
 
+    Particle::initialization();
+
     addCloud(QVector3D(0, 0, 0), QVector3D(2, 1, 1));
 
     initShaders();
@@ -73,6 +75,7 @@ void Widget::paintGL()
     _programDepth.bind();
     _programDepth.setUniformValue("u_projectionLightMatrix", _projectionLightMatrix);
     _programDepth.setUniformValue("u_shadowLightMatrix", _shadowLightMatrix);
+    Particle::firstDraw(&_programDepth);
 
     for (Particle& particle : _particles) {
         particle.draw(&_programDepth, context()->functions());
@@ -100,6 +103,7 @@ void Widget::paintGL()
     _program.setUniformValue("u_shadowLightMatrix", _shadowLightMatrix);
     _program.setUniformValue("u_lightMatrix", _lightMatrix);
     _program.setUniformValue("u_shadowMap", GL_TEXTURE4 - GL_TEXTURE0);
+    Particle::firstDraw(&_program);
 
     for (Particle& particle : _particles) {
         particle.draw(&_program, context()->functions());
