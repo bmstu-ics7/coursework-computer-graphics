@@ -1,5 +1,8 @@
 #include "Objects/Particle.h"
 
+QOpenGLBuffer Particle::_arrayBuffer;
+QOpenGLBuffer Particle::_indexBuffer;
+
 Particle::Particle() :
     Particle(0.0, 0.0, 0.0) { }
 
@@ -12,7 +15,13 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloa
 Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat width)
     : _r(r), _g(g), _b(b)
 {
-    GLfloat w = width / 2.0f;
+    _modelViewMatrix.setToIdentity();
+    _modelViewMatrix.translate(x, y, z);
+}
+
+void Particle::initialization()
+{
+    GLfloat w = 0.1f / 2.0f;
     QVector< VertexOnly > vertex;
 
     // front
@@ -72,16 +81,10 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloa
     _indexBuffer.bind();
     _indexBuffer.allocate(indexes.constData(), indexes.size() * sizeof(GLuint));
     _indexBuffer.release();
-
-    _modelViewMatrix.setToIdentity();
-    _modelViewMatrix.translate(x, y, z);
 }
 
-void Particle::draw(QOpenGLShaderProgram* program, QOpenGLFunctions* functions)
+void Particle::firstDraw(QOpenGLShaderProgram* program)
 {
-    program->setUniformValue("u_modelMatrix", _modelViewMatrix);
-    program->setUniformValue("u_color", QVector4D(_r, _g, _b, 1.0f));
-
     _arrayBuffer.bind();
 
     int offset = 0;
@@ -91,6 +94,11 @@ void Particle::draw(QOpenGLShaderProgram* program, QOpenGLFunctions* functions)
     program->setAttributeBuffer(posLoc, GL_FLOAT, offset, 3, sizeof(VertexOnly));
 
     _indexBuffer.bind();
+}
 
+void Particle::draw(QOpenGLShaderProgram* program, QOpenGLFunctions* functions)
+{
+    program->setUniformValue("u_modelMatrix", _modelViewMatrix);
+    program->setUniformValue("u_color", QVector4D(_r, _g, _b, 1.0f));
     functions->glDrawElements(GL_TRIANGLES, _indexBuffer.size(), GL_UNSIGNED_INT, 0);
 }

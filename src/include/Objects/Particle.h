@@ -26,13 +26,15 @@ public:
     Particle(GLfloat x, GLfloat y, GLfloat z);
     Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b);
     Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat width);
+    static void initialization();
+    static void firstDraw(QOpenGLShaderProgram* program);
 
     void draw(QOpenGLShaderProgram* program, QOpenGLFunctions* functions);
     void setColor(GLfloat r, GLfloat g, GLfloat b);
 
 private:
-    QOpenGLBuffer _arrayBuffer;
-    QOpenGLBuffer _indexBuffer;
+    static QOpenGLBuffer _arrayBuffer;
+    static QOpenGLBuffer _indexBuffer;
     QMatrix4x4 _modelViewMatrix;
 
     GLfloat _r;
