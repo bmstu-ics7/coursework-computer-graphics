@@ -4,8 +4,11 @@
 #define GL_SILENCE_DEPRECATION
 
 /* OpenGL libraries */
-#include <OpenGL/glu.h>
-#include <GLUT/glut.h>
+#ifdef __APPLE__
+#   include <OpenGL/glu.h>
+#else
+#   include <GL/glu.h>
+#endif
 #include <QtOpenGL>
 #include <QOpenGLWidget>
 #include "glm/glm.hpp"
