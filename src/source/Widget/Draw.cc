@@ -18,7 +18,7 @@ void Widget::initializeGL()
     _depthBuffer = new QOpenGLFramebufferObject(_fbWidth, _fbHeight, QOpenGLFramebufferObject::Depth);
 
     skyBox = SkyBox(0, 0, 0, 500);
-    skyBox.setTexture("../textures/skybox_texture.jpg");
+    skyBox.setTexture("../textures/skybox_texture.png");
 
     Particle::initialization();
 

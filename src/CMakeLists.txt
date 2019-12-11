@@ -7,7 +7,7 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-#file(GLOB SHADERS shaders/*.glsl)
+file(GLOB SHADERS "shaders/*.[vf]sh")
 
 set(HEADERS
     include/Widget/Widget.h
