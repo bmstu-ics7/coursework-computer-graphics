@@ -4,12 +4,22 @@ project(clouds)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+set(CMAKE_AUTOUIC_SEARCH_PATHS
+    "gui"
+)
+
+set(GUI
+    gui/mainwindow.ui
+)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 file(GLOB SHADERS "shaders/*.[vf]sh")
 
 set(HEADERS
+    include/Widget/MainWindow.h
     include/Widget/Widget.h
     include/Objects/Particle.h
     include/Objects/SkyBox.h
@@ -19,6 +29,7 @@ set(HEADERS
 
 set(SOURCES
     source/main.cc
+    source/Widget/MainWindow.cc
     source/Widget/Draw.cc
     source/Widget/Control.cc
     source/Widget/Camera.cc
