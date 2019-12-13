@@ -60,19 +60,15 @@ void Widget::keyPressEvent(QKeyEvent* e)
     switch (e->key()) {
     case Qt::Key_W:
         translateCamera(0, 0, 0.5);
-        update();
         break;
     case Qt::Key_A:
         translateCamera(0.5, 0, 0);
-        update();
         break;
     case Qt::Key_S:
         translateCamera(0, 0, -0.5);
-        update();
         break;
     case Qt::Key_D:
         translateCamera(-0.5, 0, 0);
-        update();
         break;
     }
 }
@@ -94,8 +90,6 @@ void Widget::mouseMoveEvent(QMouseEvent* e)
     float angle = diff.length() / 2.0f;
     QVector2D axis(diff.y(), diff.x());
     rotateCamera(QQuaternion::fromAxisAndAngle(axis, angle));
-
-    update();
 }
 
 void Widget::wheelEvent(QWheelEvent* e)
@@ -104,8 +98,6 @@ void Widget::wheelEvent(QWheelEvent* e)
         translateCamera(0, 0, -0.5);
     else if (e->delta() < 0)
         translateCamera(0, 0, 0.5);
-
-    update();
 }
 
 void Widget::sunRotateX(int value)

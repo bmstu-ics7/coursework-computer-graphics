@@ -23,9 +23,13 @@ void Widget::translateCamera(GLfloat x, GLfloat y, GLfloat z)
     _translateX += x;
     _translateY += y;
     _translateZ += z;
+
+    update();
 }
 
 void Widget::rotateCamera(QQuaternion angle)
 {
     _angle *= angle;
+
+    update();
 }
