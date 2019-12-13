@@ -9,7 +9,7 @@ double Widget::noise(siv::PerlinNoise n, double x, double y, double z)
     return r;
 }
 
-void Widget::addCloud(QVector3D center, QVector3D coefficient)
+void Widget::addCloud(const QVector3D& center, const QVector3D& coefficient, const QVector3D& color)
 {
     double x, y, z, r;
     siv::PerlinNoise noisePerlin;
@@ -28,9 +28,11 @@ void Widget::addCloud(QVector3D center, QVector3D coefficient)
             y = center[1] + y * r;
             z = center[2] + z * r;
 
-            _particles.append(Particle(x, y, z, 1.0f, 1.0f, 1.0f));
+            _particles.append(Particle(x, y, z, color.x(), color.y(), color.z()));
         }
     }
+
+    update();
 }
 
 Widget::Widget(QWidget* parent)
@@ -40,7 +42,6 @@ Widget::Widget(QWidget* parent)
     _translateX = 0;
     _translateY = 0;
     _translateZ = -10;
-    _scale = 1;
 
     _fbHeight = 1024;
     _fbWidth = 1024;
@@ -49,22 +50,6 @@ Widget::Widget(QWidget* parent)
 void Widget::keyPressEvent(QKeyEvent* e)
 {
     switch (e->key()) {
-    case Qt::Key_Up:
-        _lightRotateX += 10;
-        update();
-        break;
-    case Qt::Key_Down:
-        _lightRotateX -= 10;
-        update();
-        break;
-    case Qt::Key_Left:
-        _lightRotateZ -= 10;
-        update();
-        break;
-    case Qt::Key_Right:
-        _lightRotateZ += 10;
-        update();
-        break;
     case Qt::Key_W:
         translateCamera(0, 0, 0.5);
         update();
@@ -112,5 +97,29 @@ void Widget::wheelEvent(QWheelEvent* e)
     else if (e->delta() < 0)
         translateCamera(0, 0, 0.5);
 
-    repaint();
+    update();
+}
+
+void Widget::sunRotateX(int value)
+{
+    _lightRotateX = value;
+    update();
+}
+
+void Widget::sunRotateY(int value)
+{
+    _lightRotateY = value;
+    update();
+}
+
+void Widget::sunRotateZ(int value)
+{
+    _lightRotateZ = value;
+    update();
+}
+
+void Widget::setTextureSkyBox(const QString& path)
+{
+    skyBox.setTexture(path);
+    update();
 }

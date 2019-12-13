@@ -7,9 +7,6 @@ void Widget::initializeGL()
     _projectionLightMatrix.setToIdentity();
     _projectionLightMatrix.ortho(-40, 40, -40, 40, -40, 40);
 
-    _lightRotateX = 40;
-    _lightRotateY = 40;
-
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
     glEnable(GL_DEPTH_TEST);
@@ -18,11 +15,9 @@ void Widget::initializeGL()
     _depthBuffer = new QOpenGLFramebufferObject(_fbWidth, _fbHeight, QOpenGLFramebufferObject::Depth);
 
     skyBox = SkyBox(0, 0, 0, 500);
-    skyBox.setTexture("../textures/skybox_texture.png");
+    skyBox.setTexture("../textures/skybox2.png");
 
     Particle::initialization();
-
-    addCloud(QVector3D(0, 0, 0), QVector3D(2, 1, 1));
 
     initShaders();
 }
