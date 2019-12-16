@@ -25,7 +25,6 @@ public:
     Particle();
     Particle(GLfloat x, GLfloat y, GLfloat z);
     Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b);
-    Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat width);
     static void initialization();
     static void firstDraw(QOpenGLShaderProgram* program);
 

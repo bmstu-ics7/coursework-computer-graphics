@@ -31,6 +31,8 @@ private slots:
     void clickDown();
     void clickLeft();
     void clickRight();
+    void clickPlus();
+    void clickMinus();
 
 private:
     Ui::MainWindow* ui;

@@ -23,8 +23,8 @@ void Widget::addCloud(const QVector3D& center, const QVector3D& coefficient, con
                  coefficient.y() : coefficient.z();
     double offset = 3.0 / max;
 
-    for (double theta = 0; theta < 360; theta += offset) {
-        for (double phi = 0; phi < 360;   phi += offset) {
+    for (double theta = 0; theta <= 360; theta += offset) {
+        for (double phi = -90; phi <= 90;  phi += offset) {
             x = coefficient[0] * sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
             y = coefficient[1] * sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
             z = coefficient[2] * cos(theta * M_PI / 180);
