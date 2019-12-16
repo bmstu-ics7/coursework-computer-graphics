@@ -27,6 +27,13 @@ private slots:
     void clickAddCloud();
     void clickLoadSkyBox();
 
+    void clickUp();
+    void clickDown();
+    void clickLeft();
+    void clickRight();
+    void clickPlus();
+    void clickMinus();
+
 private:
     Ui::MainWindow* ui;
 

@@ -23,8 +23,8 @@ void Widget::addCloud(const QVector3D& center, const QVector3D& coefficient, con
                  coefficient.y() : coefficient.z();
     double offset = 3.0 / max;
 
-    for (double theta = 0; theta < 360; theta += offset) {
-        for (double phi = 0; phi < 360;   phi += offset) {
+    for (double theta = 0; theta <= 360; theta += offset) {
+        for (double phi = -90; phi <= 90;  phi += offset) {
             x = coefficient[0] * sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
             y = coefficient[1] * sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
             z = coefficient[2] * cos(theta * M_PI / 180);
@@ -60,19 +60,15 @@ void Widget::keyPressEvent(QKeyEvent* e)
     switch (e->key()) {
     case Qt::Key_W:
         translateCamera(0, 0, 0.5);
-        update();
         break;
     case Qt::Key_A:
         translateCamera(0.5, 0, 0);
-        update();
         break;
     case Qt::Key_S:
         translateCamera(0, 0, -0.5);
-        update();
         break;
     case Qt::Key_D:
         translateCamera(-0.5, 0, 0);
-        update();
         break;
     }
 }
@@ -94,8 +90,6 @@ void Widget::mouseMoveEvent(QMouseEvent* e)
     float angle = diff.length() / 2.0f;
     QVector2D axis(diff.y(), diff.x());
     rotateCamera(QQuaternion::fromAxisAndAngle(axis, angle));
-
-    update();
 }
 
 void Widget::wheelEvent(QWheelEvent* e)
@@ -104,8 +98,6 @@ void Widget::wheelEvent(QWheelEvent* e)
         translateCamera(0, 0, -0.5);
     else if (e->delta() < 0)
         translateCamera(0, 0, 0.5);
-
-    update();
 }
 
 void Widget::sunRotateX(int value)

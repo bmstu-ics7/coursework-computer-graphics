@@ -14,6 +14,12 @@ MainWindow::MainWindow(QWidget* parent) :
     QObject::connect(ui->btnCloudColor, &QPushButton::clicked, this, &MainWindow::clickCloudColor);
     QObject::connect(ui->btnAddCloud, &QPushButton::clicked, this, &MainWindow::clickAddCloud);
     QObject::connect(ui->btnLoadSkyBox, &QPushButton::clicked, this, &MainWindow::clickLoadSkyBox);
+    QObject::connect(ui->btnUp, &QPushButton::clicked, this, &MainWindow::clickUp);
+    QObject::connect(ui->btnDown, &QPushButton::clicked, this, &MainWindow::clickDown);
+    QObject::connect(ui->btnLeft, &QPushButton::clicked, this, &MainWindow::clickLeft);
+    QObject::connect(ui->btnRight, &QPushButton::clicked, this, &MainWindow::clickRight);
+    QObject::connect(ui->btnPlus, &QPushButton::clicked, this, &MainWindow::clickPlus);
+    QObject::connect(ui->btnMinus, &QPushButton::clicked, this, &MainWindow::clickMinus);
 
     ui->canvas->sunRotateX(ui->sunRotateX->value());
     ui->canvas->sunRotateY(ui->sunRotateY->value());
@@ -74,4 +80,34 @@ void MainWindow::clickLoadSkyBox()
 {
     QString fileName = QFileDialog::getOpenFileName(this);
     ui->canvas->setTextureSkyBox(fileName);
+}
+
+void MainWindow::clickUp()
+{
+    ui->canvas->translateCamera(0.0f, -1.0f, 0.0f);
+}
+
+void MainWindow::clickDown()
+{
+    ui->canvas->translateCamera(0.0f, 1.0f, 0.0f);
+}
+
+void MainWindow::clickLeft()
+{
+    ui->canvas->translateCamera(-1.0f, 0.0f, 0.0f);
+}
+
+void MainWindow::clickRight()
+{
+    ui->canvas->translateCamera(1.0f, 0.0f, 0.0f);
+}
+
+void MainWindow::clickPlus()
+{
+    ui->canvas->translateCamera(0.0f, 0.0f, 1.0f);
+}
+
+void MainWindow::clickMinus()
+{
+    ui->canvas->translateCamera(0.0f, 0.0f, -1.0f);
 }
