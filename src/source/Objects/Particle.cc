@@ -10,9 +10,6 @@ Particle::Particle(GLfloat x, GLfloat y, GLfloat z)
     : Particle(x, y, z, 1.0, 1.0, 1.0) { }
 
 Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b)
-    : Particle(x, y, z, r, g, b, 0.1) { }
-
-Particle::Particle(GLfloat x, GLfloat y, GLfloat z, GLfloat r, GLfloat g, GLfloat b, GLfloat width)
     : _r(r), _g(g), _b(b)
 {
     _modelViewMatrix.setToIdentity();

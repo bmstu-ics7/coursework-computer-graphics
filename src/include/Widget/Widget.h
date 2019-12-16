@@ -47,7 +47,8 @@ public:
     Widget(QWidget* parent = nullptr);
 
     double noise(siv::PerlinNoise n, double x, double y, double z);
-    void addCloud(QVector3D center, QVector3D coefficient);
+    void addCloud(const QVector3D& center, const QVector3D& coefficient, const QVector3D& color);
+    void setTextureSkyBox(const QString& path);
 
     void setCamera();
     void translateCamera(GLfloat x, GLfloat y, GLfloat z);
@@ -57,6 +58,10 @@ public:
     void mousePressEvent(QMouseEvent* e);
     void mouseMoveEvent(QMouseEvent* e);
     void wheelEvent(QWheelEvent* e);
+
+    void sunRotateX(int value);
+    void sunRotateY(int value);
+    void sunRotateZ(int value);
 
 private:
     QMatrix4x4 _projectionMatrix;
@@ -73,7 +78,6 @@ private:
     QList< Particle > _particles;
     SkyBox skyBox;
 
-    GLfloat _scale;
     GLfloat _translateX;
     GLfloat _translateY;
     GLfloat _translateZ;

@@ -9,14 +9,22 @@ double Widget::noise(siv::PerlinNoise n, double x, double y, double z)
     return r;
 }
 
-void Widget::addCloud(QVector3D center, QVector3D coefficient)
+void Widget::addCloud(const QVector3D& center, const QVector3D& coefficient, const QVector3D& color)
 {
     double x, y, z, r;
     siv::PerlinNoise noisePerlin;
     noisePerlin.reseed(rand());
 
-    for (double theta = 0; theta < 360; theta += 2) {
-        for (double phi = 0; phi < 360;   phi += 2) {
+    double max = coefficient.x() > coefficient.y() ?
+                 coefficient.x() > coefficient.z() ?
+                 coefficient.x() :
+                 coefficient.z() :
+                 coefficient.y() > coefficient.z() ?
+                 coefficient.y() : coefficient.z();
+    double offset = 3.0 / max;
+
+    for (double theta = 0; theta <= 360; theta += offset) {
+        for (double phi = -90; phi <= 90;  phi += offset) {
             x = coefficient[0] * sin(theta * M_PI / 180) * cos(phi * M_PI / 180);
             y = coefficient[1] * sin(theta * M_PI / 180) * sin(phi * M_PI / 180);
             z = coefficient[2] * cos(theta * M_PI / 180);
@@ -28,9 +36,11 @@ void Widget::addCloud(QVector3D center, QVector3D coefficient)
             y = center[1] + y * r;
             z = center[2] + z * r;
 
-            _particles.append(Particle(x, y, z, 1.0f, 1.0f, 1.0f));
+            _particles.append(Particle(x, y, z, color.x(), color.y(), color.z()));
         }
     }
+
+    update();
 }
 
 Widget::Widget(QWidget* parent)
@@ -40,7 +50,6 @@ Widget::Widget(QWidget* parent)
     _translateX = 0;
     _translateY = 0;
     _translateZ = -10;
-    _scale = 1;
 
     _fbHeight = 1024;
     _fbWidth = 1024;
@@ -49,37 +58,17 @@ Widget::Widget(QWidget* parent)
 void Widget::keyPressEvent(QKeyEvent* e)
 {
     switch (e->key()) {
-    case Qt::Key_Up:
-        _lightRotateX += 10;
-        update();
-        break;
-    case Qt::Key_Down:
-        _lightRotateX -= 10;
-        update();
-        break;
-    case Qt::Key_Left:
-        _lightRotateZ -= 10;
-        update();
-        break;
-    case Qt::Key_Right:
-        _lightRotateZ += 10;
-        update();
-        break;
     case Qt::Key_W:
         translateCamera(0, 0, 0.5);
-        update();
         break;
     case Qt::Key_A:
         translateCamera(0.5, 0, 0);
-        update();
         break;
     case Qt::Key_S:
         translateCamera(0, 0, -0.5);
-        update();
         break;
     case Qt::Key_D:
         translateCamera(-0.5, 0, 0);
-        update();
         break;
     }
 }
@@ -101,8 +90,6 @@ void Widget::mouseMoveEvent(QMouseEvent* e)
     float angle = diff.length() / 2.0f;
     QVector2D axis(diff.y(), diff.x());
     rotateCamera(QQuaternion::fromAxisAndAngle(axis, angle));
-
-    update();
 }
 
 void Widget::wheelEvent(QWheelEvent* e)
@@ -111,6 +98,28 @@ void Widget::wheelEvent(QWheelEvent* e)
         translateCamera(0, 0, -0.5);
     else if (e->delta() < 0)
         translateCamera(0, 0, 0.5);
+}
 
-    repaint();
+void Widget::sunRotateX(int value)
+{
+    _lightRotateX = value;
+    update();
+}
+
+void Widget::sunRotateY(int value)
+{
+    _lightRotateY = value;
+    update();
+}
+
+void Widget::sunRotateZ(int value)
+{
+    _lightRotateZ = value;
+    update();
+}
+
+void Widget::setTextureSkyBox(const QString& path)
+{
+    skyBox.setTexture(path);
+    update();
 }

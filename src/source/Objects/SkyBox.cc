@@ -40,8 +40,8 @@ SkyBox::SkyBox(GLfloat x, GLfloat y, GLfloat z, GLfloat width)
     vertex.append(VertexTex(QVector3D(+w, -w, -w), QVector2D(0.50, 1.0 / 3.0)));
 
     // top
-    vertex.append(VertexTex(QVector3D(-w, +w, +w), QVector2D(0.25, 1.00)));
-    vertex.append(VertexTex(QVector3D(-w, +w, -w), QVector2D(0.25, 2.0 / 3.0)));
+    vertex.append(VertexTex(QVector3D(-w, +w, +w), QVector2D(0.27, 1.00)));
+    vertex.append(VertexTex(QVector3D(-w, +w, -w), QVector2D(0.27, 2.0 / 3.0)));
     vertex.append(VertexTex(QVector3D(+w, +w, +w), QVector2D(0.50, 1.00)));
     vertex.append(VertexTex(QVector3D(+w, +w, -w), QVector2D(0.50, 2.0 / 3.0)));
 
