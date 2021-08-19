@@ -51,6 +51,7 @@ add_executable(clouds
 target_include_directories(clouds
     PUBLIC
         "include"
+        "include/glm"
 )
 
 target_link_libraries(clouds Qt5::Widgets Qt5::OpenGL ${OPENGL_LIBRARIES})
