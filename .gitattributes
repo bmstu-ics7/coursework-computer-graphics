@@ -1,2 +1,1 @@
-*.tex linguist-vendored
-*.bibtex linguist-vendored
+report/* linguist-documentation
